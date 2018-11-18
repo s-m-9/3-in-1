@@ -3,4 +3,22 @@
     <string name="news_reader_app_name">News Reader</string>
     <string name="movies_app_name">Movies</string>
     <string name="bus_app_name">Bus Route App</string>
+
+    //News Reader
+
+    <string name="news_txt1">News Details 1</string>
+    <string name="news_txt2">News Details 2</string>
+    <string name="news_txt3">News Details 3</string>
+    <string name="news_txt4">News Details 4</string>
+    <string name="news_txt5">News Details 5</string>
+    <string name="news_txt6">News Details 6</string>
+    <string name="news_txt7">News Details 7</string>
+    <string name="news_btn_save">Save</string>
+
+    <string name="news_txt_list">News</string>
+
+    <string name="news_search_bar">Search</string>
+    <string name="news_btn_search">Search</string>
+    <string name="news_btn_fav">Add to Favourites</string>
+
 </resources>
