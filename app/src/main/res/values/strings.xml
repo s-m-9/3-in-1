@@ -3,4 +3,16 @@
     <string name="news_reader_app_name">News Reader</string>
     <string name="movies_app_name">Movies</string>
     <string name="bus_app_name">Bus Route App</string>
+    <string name="movie_title">Title</string>
+    <string name="movie_rating">Rating</string>
+    <string name="movie_runtime">Runtime</string>
+    <string name="movie_actors">Actors</string>
+    <string name="movie_plot">Plot</string>
+    <string name="movie_poster_url">URL</string>
+    <string name="add_btn">Add To Favorites</string>
 </resources>
+
+
+
+
+
