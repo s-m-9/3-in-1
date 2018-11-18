@@ -3,4 +3,11 @@
     <string name="news_reader_app_name">News Reader</string>
     <string name="movies_app_name">Movies</string>
     <string name="bus_app_name">Bus Route App</string>
+    <string name="bus_destination">Bus Destination</string>
+    <string name="bus_latitude">Bus Latitude</string>
+    <string name="bus_longitude">Bus Longitude</string>
+    <string name="bus_gps_speed">Bus GPS Speed</string>
+    <string name="bus_start_time">Bus Start Time</string>
+    <string name="adjusted_schedule_time">Bus Adjusted Schedule Time</string>
+    <string name="bus_add_to_favourites_button">Add To Favourites</string>
 </resources>
