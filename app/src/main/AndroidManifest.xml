@@ -13,7 +13,7 @@
 
         </activity>
         <activity android:name=".NewsListActivity" />
-        <activity android:name=".MovieListActivity">
+        <activity android:name=".MovieListActivity" />
         <activity android:name=".BusListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
