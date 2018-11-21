@@ -21,4 +21,16 @@
     <string name="news_btn_search">Search</string>
     <string name="news_btn_fav">Add to Favourites</string>
 
+    <string name="movie_title">Title</string>
+    <string name="movie_rating">Rating</string>
+    <string name="movie_runtime">Runtime</string>
+    <string name="movie_actors">Actors</string>
+    <string name="movie_plot">Plot</string>
+    <string name="movie_poster_url">URL</string>
+    <string name="add_btn">Add To Favorites</string>
 </resources>
+
+
+
+
+
