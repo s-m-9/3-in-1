@@ -16,7 +16,12 @@ class BusListActivity : Activity() {
     lateinit var progress_bar : ProgressBar
     lateinit var searchButton : Button
 
-
+    /**
+     *
+     * adding adding searchButton and listarray and into code and connecting the bus list adapter
+     *
+     * @param savedInstanceState saving instance state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_list)
@@ -58,15 +63,42 @@ class BusListActivity : Activity() {
 
     }
 
+
+
+
     inner class BusListAdapter(ctx : Context): ArrayAdapter<String>(ctx, 0) {
+        /**
+         *
+         * gets the size of the array
+         *
+         * @return returns the size of list array
+         *
+         */
         override fun getCount() : Int {
             return listArray.size
         }
 
+
+        /**
+         *
+         * Getting the item from the bus list array.
+         *
+         * @param  position the index of the position in the array
+         * @return returns the item from the array
+         */
         override fun getItem(position : Int) : String {
             return listArray.get(position)
         }
 
+        /**
+         *
+         * This inflates and add a view for an item in the listView.
+         *
+         * @param position the index of the position in the array
+         * @param convertView
+         * @param parent the parent view for the adapter
+         * @return returns the view for the item in the bus list array
+         */
         override fun getView(position : Int, convertView: View?, parent : ViewGroup) : View? {
             var inflater = LayoutInflater.from(parent.getContext())
 
@@ -81,6 +113,12 @@ class BusListActivity : Activity() {
             return result
         }
 
+        /**
+         *
+         * gets the ID for the item in the array. Currently only returns the index of array item.
+         *
+         * @return the index position as a Long
+         */
         override fun getItemId(position: Int):Long {
             return position.toLong()
         }

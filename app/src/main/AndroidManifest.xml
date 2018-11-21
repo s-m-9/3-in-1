@@ -22,13 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewsDetailsActivity" />
-<<<<<<< HEAD
-        <activity android:name=".MoviesDetailsActivity">
-=======
         <activity android:name=".MoviesDetailsActivity" />
         <activity android:name=".BusDetailsActivity">
 
->>>>>>> 9d5b310ed0f8f3cbc91ae415cad7d17552dd1fc2
+
         </activity>
     </application>
 

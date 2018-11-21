@@ -7,6 +7,11 @@ import android.widget.Button
 
 class BusDetailsActivity : Activity() {
 
+
+    /**
+     * It displays a details of the list item and shows a favorites button
+     * @param savedInstanceState saves instance state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_details)
