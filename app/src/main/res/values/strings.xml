@@ -28,9 +28,11 @@
     <string name="movie_plot">Plot</string>
     <string name="movie_poster_url">URL</string>
     <string name="add_btn">Add To Favorites</string>
+    <string name="bus_destination">Bus Destination</string>
+    <string name="bus_latitude">Bus Latitude</string>
+    <string name="bus_longitude">Bus Longitude</string>
+    <string name="bus_gps_speed">Bus GPS Speed</string>
+    <string name="bus_start_time">Bus Start Time</string>
+    <string name="adjusted_schedule_time">Bus Adjusted Schedule Time</string>
+    <string name="bus_add_to_favourites_button">Add To Favourites</string>
 </resources>
-
-
-
-
-
