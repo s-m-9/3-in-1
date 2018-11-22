@@ -4,3 +4,8 @@
 .gradle
 /.idea/workspace.xml
 /.idea/libraries
+*.iml
+/.idea/caches/build_file_checksums.ser
+/.idea/modules.xml
+/captures
+.externalNativeBuild
