@@ -19,6 +19,8 @@
     <string name="news_search_bar">Search</string>
     <string name="news_btn_search">Search</string>
     <string name="news_btn_fav">Add to Favourites</string>
+    <string name="news_hint_search">search</string>
+    <string name="news_title">News</string>
 
     <string name="movie_title">Title</string>
     <string name="movie_rating">Rating</string>

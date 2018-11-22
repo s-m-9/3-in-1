@@ -10,7 +10,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".ChooseActivity">
-
         </activity>
 
         <activity android:name=".BusListActivity"/>
@@ -27,6 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".FoodDetailsActivity">
+        </activity>
+        <activity android:name=".NewsFavouritesActivity">
         </activity>
     </application>
 
