@@ -12,6 +12,10 @@
         <activity android:name=".ChooseActivity">
 
         </activity>
+
+        <activity android:name=".BusListActivity"/>
+        <activity android:name=".MovieListActivity"/>
+        <activity android:name=".NewsListActivity"/>
         <activity android:name=".NewsDetailsActivity"/>
         <activity android:name=".MoviesDetailsActivity"/>
         <activity android:name=".BusDetailsActivity" />
