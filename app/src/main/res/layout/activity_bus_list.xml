@@ -10,8 +10,8 @@
     <EditText android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentStart="true"
-              android:layout_toLeftOf="@id/searchButton"
-              android:id="@+id/Search"
+              android:layout_toLeftOf="@id/BusSearchButton"
+              android:id="@+id/BusSearchBar"
               android:hint="Search"
               android:layout_alignParentTop="true"
     />
@@ -20,13 +20,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="Search"
-            android:id="@+id/searchButton"
+            android:id="@+id/BusSearchButton"
 
+    />
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/BusSearchBar"
+              android:text="@string/bus_stop_not_found"
+              android:textSize="30dp"
+              android:visibility="invisible"
+              android:id="@+id/BusStopNotFound"
     />
 
     <ProgressBar android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:layout_below="@+id/Search"
+                 android:layout_below="@+id/BusSearchBar"
                  android:id="@+id/progressBar"
                  android:visibility="invisible"
     />
@@ -36,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/Search"
+            android:layout_below="@+id/BusSearchBar"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
 
