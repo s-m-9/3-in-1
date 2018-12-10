@@ -23,7 +23,7 @@ class FoodDetailsActivity : AppCompatActivity(), SearchFragment.OnFragmentIntera
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
     private var foodList = null as ListView?
-    lateinit var dbHelper: ChatDatabaseHelper
+    lateinit var dbHelper: FoodDatabaseHelper
     lateinit var results: Cursor
     lateinit var db: SQLiteDatabase
     lateinit var myAdapter: MyAdapter
@@ -39,17 +39,15 @@ class FoodDetailsActivity : AppCompatActivity(), SearchFragment.OnFragmentIntera
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_details)
-        dbHelper = ChatDatabaseHelper() //get a helper object
+        dbHelper = FoodDatabaseHelper() //get a helper object
         db = dbHelper.writableDatabase//open your database
         results = db.query(TABLE_NAME, arrayOf("_id", dbHelper.KEY_FOOD, dbHelper.KEY_CALORIES, dbHelper.KEY_FAT), null, null, null, null, null, null )
         results.getCount()
         results.moveToFirst() //point to first row
-        val idIndex = results.getColumnIndex("_id") //find the index of _id column
         val foodIndex = results.getColumnIndex(dbHelper.KEY_FOOD) // find the index of Messages column
         val calorieIndex = results.getColumnIndex(dbHelper.KEY_CALORIES)
         val fatIndex = results.getColumnIndex(dbHelper.KEY_FAT)
         while(!results.isAfterLast()){
-            var thisID = results.getInt(idIndex)
             var thisFood = results.getString(foodIndex)
             var thisCalories = results.getString(calorieIndex)
             var thisFat = results.getString(fatIndex)
@@ -73,20 +71,11 @@ class FoodDetailsActivity : AppCompatActivity(), SearchFragment.OnFragmentIntera
             this.foodPosition = myAdapter.getItemId(position)
 
             val intent = Intent(this, FoodListActivity::class.java)
-
-                intent.putExtra("Name", food.get(position))
-
-                intent.putExtra("Fat", fat.get(position))
-            intent.putExtra("Calories", calories.get(position))
-
+                intent.putExtra("Name", food[position])
+                intent.putExtra("Fat", fat[position])
+                intent.putExtra("Calories", calories[position])
                 setResult(Activity.RESULT_OK, intent)
-
-
-            Handler().postDelayed({
                 finish()
-            }, 1000)
-
-
 
 
 
@@ -211,7 +200,7 @@ class FoodDetailsActivity : AppCompatActivity(), SearchFragment.OnFragmentIntera
     val TABLE_NAME = "Food"
 
 
-    inner class ChatDatabaseHelper : SQLiteOpenHelper(this@FoodDetailsActivity, DATABASE_NAME, null, VERSION_NUM){
+    inner class FoodDatabaseHelper : SQLiteOpenHelper(this@FoodDetailsActivity, DATABASE_NAME, null, VERSION_NUM){
         val KEY_FOOD = "Food"
         val KEY_ID = "_id"
         val KEY_CALORIES = "Calories"

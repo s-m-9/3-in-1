@@ -10,21 +10,21 @@ android:id="@+id/foodListContainer">
 
     <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:id="@+id/container"
                   android:layout_height="match_parent" android:layout_alignBottom="@+id/typeSearch"
-                  android:layout_marginBottom="-463dp"></LinearLayout>
+                  android:layout_marginBottom="-459dp"></LinearLayout>
 
     <EditText android:layout_width="297dp"
               android:layout_height="wrap_content"
               android:id="@+id/typeSearch"
               android:layout_toLeftOf="@+id/pressSearch"
-              android:hint="Search" android:layout_marginRight="-1dp" android:layout_below="@+id/pressSearch"
-              android:layout_marginTop="-48dp"/>
+              android:hint="Search any food item..." android:layout_marginRight="-1dp"
+              android:layout_alignBottom="@+id/pressSearch" android:layout_marginBottom="-3dp"/>
 
     <Button android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/pressSearch"
             android:text="Search"
             android:layout_alignParentEnd="true" android:layout_marginTop="0dp" android:layout_alignParentTop="true"
-            android:layout_marginEnd="0dp"/>
+            android:layout_marginEnd="0dp" android:textSize="14sp"/>
     <Button
             android:text="Add to Favourites"
             android:layout_width="wrap_content"

@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
@@ -23,6 +24,8 @@ import java.net.URL
 import java.net.URLEncoder
 import android.widget.Toolbar
 import java.io.Reader
+import java.lang.ArithmeticException
+import java.util.logging.Level
 import kotlin.concurrent.fixedRateTimer
 
 
@@ -44,10 +47,11 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
     lateinit var name : String
     lateinit var fat : String
     lateinit var calories: String
-    lateinit var dbHelper: ChatDatabaseHelper
+    lateinit var dbHelper: FoodDatabaseHelper
     lateinit var results: Cursor
     lateinit var db: SQLiteDatabase
-
+    lateinit var newFragment:SearchFragment
+    lateinit var query: String
 
 
     /**
@@ -64,32 +68,38 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_list)
 
-
-
         //var toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.toolbar)
 
         pressSearch = findViewById<Button>(R.id.pressSearch)
         inputText = findViewById(R.id.typeSearch)
 
         pressSearch.setOnClickListener{
-            Toast.makeText(this, "Get Out Of Here", Toast.LENGTH_SHORT).show()
-            FoodQuery().execute(inputText.text.toString())
-            inputText.setText("")
+            if (inputText.text.isEmpty()){
+                Toast.makeText(this, "Search field must not be empty", Toast.LENGTH_LONG).show()
+            }else{
+                FoodQuery().execute(inputText.text.toString())
+                inputText.setText("")
 
-            var infoToPass = Bundle()
-            Handler().postDelayed({
-                infoToPass.putString("Name",name)
-                infoToPass.putString("Fat",fat)
-                infoToPass.putString("Calories", calories)
+                var infoToPass = Bundle()
 
+                try {
 
+                    Handler().postDelayed({
+                        infoToPass.putString("Name",name)
+                        infoToPass.putString("Fat",fat)
+                        infoToPass.putString("Calories", calories)
 
+                        newFragment = SearchFragment()
+                        newFragment.arguments = infoToPass
+                        supportFragmentManager.beginTransaction().replace(R.id.foodListContainer,newFragment ).commit();
 
-            var newFragment = SearchFragment()
-            newFragment.arguments = infoToPass
-            supportFragmentManager.beginTransaction().add(R.id.foodListContainer,newFragment ).commit();
+                    }, 2000)
 
-            }, 1500)
+                }catch (e: ArithmeticException){
+
+                    Log.i("Error","an exception was thrown");
+                }
+            }
         }
 
         addFavs = findViewById<Button>(R.id.favourites)
@@ -104,7 +114,9 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
 
         addFavs?.setOnClickListener {
 
-            dbHelper = ChatDatabaseHelper() //get a helper object
+
+
+            dbHelper = FoodDatabaseHelper() //get a helper object
             db = dbHelper.writableDatabase//open your database
             results = db.query(TABLE_NAME, arrayOf("_id", dbHelper.KEY_FOOD), null, null, null, null, null, null )
             val newRow = ContentValues()
@@ -116,6 +128,13 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             results = db.query(TABLE_NAME, arrayOf( dbHelper.KEY_FOOD, dbHelper.KEY_ID, dbHelper.KEY_FAT, dbHelper.KEY_CALORIES),
                 null, null, null, null,null,null
             )
+
+            Toast.makeText(this, name + " added to favourites", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({
+                supportFragmentManager.beginTransaction().remove(newFragment).commit();
+            }, 600)
+
 
             val intent = Intent(this, FoodDetailsActivity::class.java)
 
@@ -169,25 +188,18 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
 
     inner class FoodQuery : AsyncTask<String, Integer, String>(){
         override fun doInBackground(vararg params: String?): String {
-
-            var query = URLEncoder.encode(params[0], "UTF-8")
+            query = URLEncoder.encode(params[0], "UTF-8")
             var url = URL("https://api.edamam.com/api/food-database/parser?app_id=a79e98d4&app_key=1ae7a8747a7c27ea98a0124a85d9cc91&ingr=$query")
             val Connection = url.openConnection() as HttpURLConnection
             val stream = Connection.getInputStream()
-
             var reader = BufferedReader(InputStreamReader(stream) as Reader?, 8)
-
             var sb = StringBuilder()
-
             var line = reader.readLine()
             while(line != null){
                 sb.append(line!! + "\n")
                 line = reader.readLine()
             }
-
             var result = sb.toString()
-
-
             var root = JSONObject(result)
             var array = root.getJSONArray("parsed")
             var foodObject = array.getJSONObject(0)
@@ -195,13 +207,9 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             var nutrients = food.getJSONObject("nutrients")
             fat = nutrients.getDouble("FAT").toString()
             calories = nutrients.getDouble("ENERC_KCAL").toString()
-
             name = root.getString("text")
-
             publishProgress()
-
             return result
-
         }
 
         override fun onProgressUpdate(vararg values: Integer?) {
@@ -225,7 +233,7 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
     val TABLE_NAME = "Food"
 
 
-    inner class ChatDatabaseHelper : SQLiteOpenHelper(this@FoodListActivity, DATABASE_NAME, null, VERSION_NUM){
+    inner class FoodDatabaseHelper : SQLiteOpenHelper(this@FoodListActivity, DATABASE_NAME, null, VERSION_NUM){
         val KEY_FOOD = "Food"
         val KEY_ID = "_id"
         val KEY_CALORIES = "Calories"
@@ -247,16 +255,14 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             if (resultCode == RESULT_OK) {
 
 
-               val returnedName = intent.getStringExtra("Name")
-                val returnedCalories =  intent.getStringExtra("Calories")
-                val returnedFat =  intent.getStringExtra("Fat")
-
+               val returnedName = data!!.getStringExtra("Name")
+                val returnedCalories =  data!!.getStringExtra("Calories")
+                val returnedFat =  data!!.getStringExtra("Fat")
                 var infoToPass = Bundle()
-                infoToPass.putString("Name", returnedName)
-                infoToPass.putString("Calories", returnedCalories)
-                infoToPass.putString("Fat", returnedFat)
 
-
+                      infoToPass.putString("Name", returnedName)
+                      infoToPass.putString("Calories", returnedCalories)
+                      infoToPass.putString("Fat", returnedFat)
                 var newFragment = SearchFragment()
                 newFragment.arguments = infoToPass
                 supportFragmentManager.beginTransaction().replace(R.id.foodListContainer, newFragment).commit();
