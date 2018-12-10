@@ -35,4 +35,7 @@
     <string name="bus_start_time">Bus Start Time</string>
     <string name="adjusted_schedule_time">Bus Adjusted Schedule Time</string>
     <string name="bus_add_to_favourites_button">Add To Favourites</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
