@@ -38,6 +38,8 @@
         </activity>
         <activity android:name=".BusListActivity">
         </activity>
+
+        <activity android:name=".NewsFavouritesActivity"/>
 =======
 >>>>>>> cfda888d32233c50d49015f19de16a3b9055f264
     </application>

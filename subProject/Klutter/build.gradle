@@ -1,0 +1,162 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        // classpath group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: version_kotlin
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$version_dokka"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.12.0"
+    }
+}
+
+plugins {
+    id 'nebula.kotlin' version '1.3.10' apply false
+    id 'nebula.maven-resolved-dependencies' version '9.2.0' apply false
+}
+
+apply from: "$rootDir/project-settings.gradle"
+
+apply from: "$rootDir/gradle/sonatype-top.gradle"
+
+subprojects {
+    apply from: "$rootDir/gradle/kotlin-settings.gradle"
+    apply from: "$rootDir/gradle/idea.gradle"
+    apply plugin: 'nebula.maven-resolved-dependencies'
+    apply from: "$rootDir/gradle/sonatype-subproj.gradle"
+    apply from: "$rootDir/gradle/bintray.gradle"
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+           url 'https://dl.bintray.com/kodein-framework/Kodein-DI/'
+        }
+    }
+
+    dependencies {
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
+        compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version_kotlin"
+
+        testCompile "junit:junit:$version_junit"
+        testCompile "org.jetbrains.kotlin:kotlin-test:$version_kotlin"
+        testCompile "org.jetbrains.kotlin:kotlin-test-junit:$version_kotlin"
+
+       // testCompile "org.slf4j:slf4j-api:$version_slf4j"
+       // testCompile "org.jetbrains.kotlin:kotlin-reflect:$version_kotlin"
+       // testRuntime "ch.qos.logback:logback-classic:$version_logback"
+    }
+
+    //noinspection GroovyAssignabilityCheck
+    configurations.all {
+        // kill all logging anything else might bring in, all of our projects use slf4j if any
+        exclude group: "org.slf4j", module: "slf4j-simple"
+        exclude group: "commons-logging"
+        exclude group: "log4j"
+        exclude group: "com.google.code.findbugs"
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+
+        resolutionStrategy {
+            cacheDynamicVersionsFor 12, 'hours'  // things with wildcard version numbers
+            cacheChangingModulesFor 0, 'hours'
+            // things with same version, but content of module changes, i.e. SNAPSHOT
+        }
+
+    }
+}
+
+
+subprojects { subproj ->
+    def pomOnlyModule = !(new File("${projectDir.toString()}/src/main/kotlin").exists())
+    if (pomOnlyModule) {
+        println("Project $name is POM ONLY (has no code of its own)")
+
+        task jars() {
+            dependsOn build
+        }
+
+        artifacts {}
+    } else {
+        apply plugin: 'org.jetbrains.dokka'
+
+        def dirname = subproj.projectDir.absoluteFile.name
+        def moduleName = subproj.name
+        def dokkaOutputBase = "${rootDir}/docs"
+        def dokkaLinkDir = "${projectDir}/src/main/kotlin"
+        def dokkaLinkUrl = "https://github.com/kohesive/klutter/blob/master/${dirname}/src/main/kotlin"
+        def dokkaLinkSuffix = "#L"
+
+        def dokkaIncludes = [ "${projectDir}/README.md" ]
+
+        // our form of JavaDoc for JARs in Maven (from Java perspective, not good docs for Kotlin)
+        dokka {
+            outputFormat = "javadoc"
+            outputDirectory = "${buildDir}/javadoc"
+            linkMapping {
+                dir = dokkaLinkDir
+                url = dokkaLinkUrl
+                suffix = dokkaLinkSuffix
+            }
+        }
+
+        // output to docs directory:  HTML format
+        task dokkaHtml(type: org.jetbrains.dokka.gradle.DokkaTask) {
+            outputFormat = "html"
+            outputDirectory = "${dokkaOutputBase}/${outputFormat}/${moduleName}"
+            linkMapping {
+                dir = dokkaLinkDir
+                url = dokkaLinkUrl
+                suffix = dokkaLinkSuffix
+            }
+        }
+
+        // output to docs directory:  Markdown format
+        task dokkaMarkdown(type: org.jetbrains.dokka.gradle.DokkaTask) {
+            outputFormat = "markdown"
+            outputDirectory = "${dokkaOutputBase}/${outputFormat}/${moduleName}"
+            // includes = dokkaIncludes
+            linkMapping {
+                dir = dokkaLinkDir
+                url = dokkaLinkUrl
+                suffix = dokkaLinkSuffix
+            }
+        }
+
+        // output to docs directory:  Javadoc format
+        task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+            outputFormat = "javadoc"
+            outputDirectory = "${dokkaOutputBase}/${outputFormat}/${moduleName}"
+            linkMapping {
+                dir = dokkaLinkDir
+                url = dokkaLinkUrl
+                suffix = dokkaLinkSuffix
+            }
+        }
+
+        task dokkaAll() {
+            // dependsOn dokkaHtml
+            dependsOn dokkaMarkdown
+            // dependsOn dokkaJavadoc
+        }
+
+
+        task jars() {
+            dependsOn build
+            dependsOn javadoc
+            dependsOn dokkaAll
+        }
+
+        javadoc.dependsOn(dokka)
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "$version_gradle"
+}
+
+task jars() {
+    dependsOn subprojects.jars
+}
+
+defaultTasks 'clean', 'build', 'check'
