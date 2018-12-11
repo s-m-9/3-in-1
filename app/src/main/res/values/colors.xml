@@ -4,9 +4,22 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorGreen">#008000</color>
     <color name="colorYellowGreen">#9ACD32</color>
     <color name="colorSteelBlue">#4682B4</color>
+    <color name="colorLightSteelBle">#B0C4DE</color>
+    <color name="colorCrimson">#DC143C</color>
     <color name="colorFireBrick">#B22222</color>
+    <color name="colorDarkRed">#8B0000</color>
     <color name="colorTransparent">#00FFFFFF</color>
+    <color name="colorPurpleBlue">#3949AB</color>
+    <color name="colorPurple">#800080</color>
+    <color name="colorDarkPurple">#00227B</color>
+    <color name="colorDarkSlateBlue">#483D8B</color>
+    <color name="colorLightGrey">#E0E0E0</color>
+    <color name="colorSilver">#C0C0C0</color>
+    <color name="colorDimGrey">#696969</color>
+    <color name="colorOffWhite">#FAFAFA</color>
+    <color name="colorDarkLateGrey">#2F4F4F</color>
 </resources>

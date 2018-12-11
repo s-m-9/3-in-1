@@ -1,0 +1,7 @@
+dependencies {
+    compile project(":klutter-core")
+    compile project(":klutter-config-typesafe")
+    compile project(":klutter-json-jackson-kodein")
+
+    compile "org.kodein.di:kodein-di-generic-jvm:$version_kodein"
+}

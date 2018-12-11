@@ -2,57 +2,80 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".NewsDetailsActivity">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_txt1"
-            android:id="@+id/news_txt1"/>
 
-    <TextView
+    <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/news_card_view"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_txt2"
-            android:id="@+id/news_txt2"/>
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            card_view:cardCornerRadius="4dp">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_txt3"
-            android:id="@+id/news_txt3"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_txt4"
-            android:id="@+id/news_txt4"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/news_image"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_launcher_background"/>
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_txt5"
-            android:id="@+id/news_txt5"/>
+        <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="@string/news_btn_bookmark"
+                android:src="@drawable/news_btn_bookmark_off"
+                android:background="@color/colorTransparent"
+                android:id="@+id/news_btn_bookmark_off"
+                android:layout_gravity="end"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/news_image" />
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_txt6"
-            android:id="@+id/news_txt6"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/news_title"
+                android:id="@+id/news_title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/news_btn_bookmark_off" />
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_txt7"
-            android:id="@+id/news_txt7"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="16sp"
+                android:id="@+id/news_description"
+                android:layout_below="@+id/news_title" />
 
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_btn_fav"
-            android:id="@+id/news_btn_fav"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/news_link"
+                android:layout_below="@+id/news_description" />
+
+
+        </LinearLayout>
+    <!--<ImageButton-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/news_btn_bookmark"-->
+            <!--android:src="@drawable/news_btn_bookmark_on"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:background="@color/colorTransparent"-->
+            <!--android:id="@+id/news_btn_bookmark_on"/>-->
+
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

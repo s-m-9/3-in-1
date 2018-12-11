@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="bmm.com.threeinone">
-
+<uses-permission android:name="android.permission.INTERNET"/>
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -10,25 +10,24 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".ChooseActivity">
-        </activity>
 
+        </activity>
         <activity android:name=".BusListActivity"/>
         <activity android:name=".MovieListActivity"/>
-        <activity android:name=".NewsListActivity"/>
+        <activity android:name=".NewsListActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+        </activity>
         <activity android:name=".NewsDetailsActivity"/>
         <activity android:name=".MoviesDetailsActivity"/>
         <activity android:name=".BusDetailsActivity" />
-        <activity android:name=".FoodListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <activity android:name=".FoodListActivity"/>
+        <activity android:name=".FoodDetailsActivity"/>
+        <activity android:name=".NewsFavouritesActivity"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".FoodDetailsActivity">
-        </activity>
-        <activity android:name=".NewsFavouritesActivity">
-        </activity>
     </application>
 
 </manifest>

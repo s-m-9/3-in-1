@@ -8,26 +8,10 @@
         tools:context=".NewsListActivity">
 
 
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/news_hint_search"
-            android:layout_toLeftOf="@id/news_btn_search"
-            android:id="@+id/news_search_bar"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"/>
-
-    <Button android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/news_btn_search"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/news_btn_search"/>
-
     <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/progress_bar"
-            android:layout_below="@+id/news_search_bar"
             android:visibility="invisible"/>
 
     <ListView
@@ -37,8 +21,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:id="@+id/news_list"
-            android:layout_below="@+id/progress_bar"/>
-
+            android:layout_below="@+id/progress_bar"
+    />
 
 
 </RelativeLayout>

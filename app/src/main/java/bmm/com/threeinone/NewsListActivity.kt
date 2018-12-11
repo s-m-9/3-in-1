@@ -3,38 +3,142 @@ package bmm.com.threeinone
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Xml
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.FieldPosition
+import android.Manifest.permission.INTERNET
+import android.util.Log
+
+data class NewsArticle (
+    var newsTitle: String?,
+    var newsDescription: String?,
+    var newsLink: String?,
+    var newsImage: String?
+
+)
 
 class NewsListActivity : Activity() {
 
-    var listArray : ArrayList<String> = ArrayList<String>()
+    var listArray : ArrayList<NewsArticle> = ArrayList<NewsArticle>()
     lateinit var newsListAdapter : NewsListAdapter
     lateinit var news_view : ListView
     lateinit var progress_bar : ProgressBar
-    lateinit var news_btn_search : Button
+
+inner class NewsListQuery : AsyncTask<String, Integer, String>(){
+
+    override fun doInBackground(vararg p0: String?): String {
+
+        val url = URL("https://www.cbc.ca/cmlink/rss-world")
+
+        val connection = url.openConnection() as HttpURLConnection //goes to the server
+        val response = connection.getInputStream() //connects to server and gets response back
+
+        val factory = XmlPullParserFactory.newInstance()
+        factory.setNamespaceAware(false)
+        val xpp = factory.newPullParser()
+        xpp.setInput(response, "UTF-8")
+
+        var title: String? = null
+        var link: String? = null
+        var description: String? = null
+
+
+        var article: NewsArticle? = null
+
+        while (xpp.eventType != XmlPullParser.END_DOCUMENT) {
+
+            var tagName = xpp.name
+
+    // create a news article object - conditional that checks to see if it is full
+            when (xpp.eventType) {
+
+                XmlPullParser.START_TAG -> {
+                    if (tagName.equals("item")) {
+                        article = NewsArticle(null, null, null, null)
+                    }
+
+
+                    if(tagName.equals("title")) {
+                        //going to set the obj to whats inside the tag using nextText()
+                        title = xpp.nextText()
+                        article?.newsTitle = title
+
+                    }
+
+                    if(tagName.equals("description")) {
+                     //going to set the obj to whats inside the tag using nextText()
+                     description = xpp.nextText()
+                        val re = Regex("\\(?\\b(https://|www[.])[-A-Za-z0-9+&amp;@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&amp;@#/%=~_()|]")
+                        val matchResult = re.find(description)
+
+                       if (matchResult != null) {
+                           article?.newsImage = matchResult.value
+//                           Log.i("Somethign", matchResult.value)
+                       }
+
+                     article?.newsDescription = description
+
+                    }
+
+                    if(tagName.equals("link")) {
+                        //going to set the obj to whats inside the tag using nextText()
+                        link = xpp.nextText()
+                        article?.newsLink = link
+                    }
+
+
+                }
+                // IN THE END TAG
+                // conditional that checks if the news obj is full
+                // if it is, add it to the listarray
+                // if it isn't then keep going
+                XmlPullParser.END_TAG -> {
+                    if (article?.newsTitle != null && article?.newsLink != null && article?.newsDescription != null) {
+                        listArray.add(article)
+                        article = null
+                        publishProgress()
+                    }
+                }
+            }
+
+            xpp.next()
+        }
+
+        return "done"
+
+    }
+
+    override fun onProgressUpdate(vararg values: Integer?) {
+        super.onProgressUpdate(*values)
+
+        newsListAdapter.notifyDataSetChanged()
+    }
+
+    override fun onPostExecute(result: String?) {
+        super.onPostExecute(result)
+        newsListAdapter.notifyDataSetChanged()
+    }
+}
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_list)
 
-        listArray.add("A")
-        listArray.add("B")
-        listArray.add("C")
-        listArray.add("D")
-        listArray.add("E")
-        listArray.add("F")
-        listArray.add("G")
 
-        news_btn_search = findViewById(R.id.news_btn_search)
+        var myQuery = NewsListQuery()
+        myQuery.execute()
 
-        news_btn_search.setOnClickListener{
-            Toast.makeText(this, "this is toast", Toast.LENGTH_SHORT).show()
-        }
 
         progress_bar = findViewById<ProgressBar>(R.id.progress_bar)
 
@@ -47,6 +151,10 @@ class NewsListActivity : Activity() {
         news_view?.setOnItemClickListener {_, _, position, _->
             val selected = listArray[position]
             val detailIntent = Intent(this, NewsDetailsActivity::class.java)
+            detailIntent.putExtra("title", listArray.get(position).newsTitle)
+            detailIntent.putExtra("image", listArray.get(position).newsImage)
+            detailIntent.putExtra("description", listArray.get(position).newsDescription)
+            detailIntent.putExtra("link", listArray.get(position).newsLink)
 
             startActivity(detailIntent)
         }
@@ -54,7 +162,7 @@ class NewsListActivity : Activity() {
 
     }
 
-    inner class NewsListAdapter(ctx : Context): ArrayAdapter<String>(ctx, 0) {
+    inner class NewsListAdapter(ctx : Context) : ArrayAdapter<NewsArticle>(ctx, 0) {
         /**
          *
          * Getting the item from the bus list array.
@@ -74,7 +182,7 @@ class NewsListActivity : Activity() {
          * @param  position the index of the position in the array
          * @return returns the item from the array
          */
-        override fun getItem(position: Int) : String {
+        override fun getItem(position: Int) : NewsArticle {
             return listArray.get(position)
         }
 
@@ -94,8 +202,9 @@ class NewsListActivity : Activity() {
 
             result = inflater.inflate(R.layout.news_list_item, null)
 
+
             val item_name = result.findViewById<TextView>(R.id.news_title)
-            item_name.setText(getItem(position) )
+            item_name.setText(getItem(position).newsTitle)
 
             return result
         }
@@ -111,4 +220,5 @@ class NewsListActivity : Activity() {
             return position.toLong()
         }
     }
+
 }
