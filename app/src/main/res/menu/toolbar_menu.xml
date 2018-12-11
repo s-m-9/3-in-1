@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item android:id="@+id/action_one"
-          android:title="Meal"
-          android:icon="@drawable/meal"
-          android:orderInCategory="100"
-          app:showAsAction="never" />
+        android:title="One"
+        android:icon="@drawable/checked"
+        android:orderInCategory="100"
+          app:showAsAction="always"/>
 
     <item android:id="@+id/action_two"
-          android:title="Cow"
-          android:icon="@drawable/cow"
-          android:orderInCategory="200"
-          app:showAsAction="never" />
+        android:title="Two"
+        android:icon="@drawable/storm"
+        android:orderInCategory="200"
+          app:showAsAction="always"/>
 
     <item android:id="@+id/action_three"
-          android:title="Pokedex"
-          android:icon="@drawable/pokedex"
-          android:orderInCategory="300"
-          app:showAsAction="never" />
+        android:title="Three"
+        android:icon="@drawable/sunrise"
+        android:orderInCategory="300"
+          app:showAsAction="always"/>
 
     <item android:id="@+id/action_four"
-          android:title="Bar Chart"
-          android:icon="@drawable/barchart"
-          android:orderInCategory="400"
-          app:showAsAction="never" />
+        android:title="About"
+        android:icon="@drawable/download"
+        android:orderInCategory="400"
+          app:showAsAction="never"/>
 
 
 </menu>

@@ -1,20 +1,58 @@
 package bmm.com.threeinone
 
 import android.app.Activity
-import android.content.Context
+import android.content.ContentValues
 import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.os.Handler
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
+import android.widget.Toolbar
+import java.io.Reader
+import java.lang.ArithmeticException
+import java.util.logging.Level
+import kotlin.concurrent.fixedRateTimer
 
-class FoodListActivity : Activity() {
 
-    var foodArray : ArrayList<String> = ArrayList<String>()
-    lateinit var  foodlistAdapter : FoodListAdapter
+class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInteractionListener{
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    var foodNameArray : ArrayList<String> = ArrayList<String>()
+    var foodFatArray: ArrayList<String> = ArrayList<String>()
+    var foodCalorieArray: ArrayList<String> = ArrayList<String>()
     lateinit var FoodView: ListView
+    lateinit var addFavs: Button
     lateinit var pressSearch : Button
+    lateinit var inputText : EditText
+//    lateinit var foodName: TextView
+//    lateinit var foodFat: TextView
+//    lateinit var foodCalories: TextView
+    lateinit var name : String
+    lateinit var fat : String
+    lateinit var calories: String
+    lateinit var dbHelper: FoodDatabaseHelper
+    lateinit var results: Cursor
+    lateinit var db: SQLiteDatabase
+    lateinit var newFragment:SearchFragment
+    lateinit var query: String
+
 
     /**
         * adds items to the food array
@@ -30,91 +68,211 @@ class FoodListActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_list)
 
-
-
-        foodArray.add("Apple")
-        foodArray.add("Orange")
-        foodArray.add("Banana")
-        foodArray.add("Kiwi")
-        foodArray.add("Grapes")
+        //var toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.toolbar)
 
         pressSearch = findViewById<Button>(R.id.pressSearch)
+        inputText = findViewById(R.id.typeSearch)
 
         pressSearch.setOnClickListener{
-            Toast.makeText(this, "Get Out Of Here", Toast.LENGTH_SHORT).show()
+            if (inputText.text.isEmpty()){
+                Toast.makeText(this, "Search field must not be empty", Toast.LENGTH_LONG).show()
+            }else{
+                FoodQuery().execute(inputText.text.toString())
+                inputText.setText("")
+
+                var infoToPass = Bundle()
+
+                try {
+
+                    Handler().postDelayed({
+                        infoToPass.putString("Name",name)
+                        infoToPass.putString("Fat",fat)
+                        infoToPass.putString("Calories", calories)
+
+                        newFragment = SearchFragment()
+                        newFragment.arguments = infoToPass
+                        supportFragmentManager.beginTransaction().replace(R.id.foodListContainer,newFragment ).commit();
+
+                    }, 2000)
+
+                }catch (e: ArithmeticException){
+
+                    Log.i("Error","an exception was thrown");
+                }
+            }
         }
 
-        FoodView = findViewById<ListView>(R.id.FoodView)
+        addFavs = findViewById<Button>(R.id.favourites)
 
-        foodlistAdapter = FoodListAdapter(this)
+        //foodlistAdapter = FoodListAdapter(this)
 
-        FoodView?.setAdapter(foodlistAdapter)
+        //FoodView?.setAdapter(foodlistAdapter)
+//
+//        foodName = findViewById(R.id.foodName)
+//        foodFat = findViewById(R.id.foodFat)
+//        foodCalories = findViewById(R.id.foodCalories)
+
+        addFavs?.setOnClickListener {
 
 
-        FoodView?.setOnItemClickListener{_, _, position, _ ->
-            val selectedFood = foodArray[position]
-            val foodDetailIntent = Intent(this, FoodDetailsActivity::class.java)
 
-            startActivity(foodDetailIntent)
+            dbHelper = FoodDatabaseHelper() //get a helper object
+            db = dbHelper.writableDatabase//open your database
+            results = db.query(TABLE_NAME, arrayOf("_id", dbHelper.KEY_FOOD), null, null, null, null, null, null )
+            val newRow = ContentValues()
+            newRow.put(dbHelper.KEY_FOOD, name)
+            newRow.put(dbHelper.KEY_CALORIES, calories)
+            newRow.put(dbHelper.KEY_FAT, fat)
+
+            db.insert(TABLE_NAME, "", newRow)
+            results = db.query(TABLE_NAME, arrayOf( dbHelper.KEY_FOOD, dbHelper.KEY_ID, dbHelper.KEY_FAT, dbHelper.KEY_CALORIES),
+                null, null, null, null,null,null
+            )
+
+            Toast.makeText(this, name + " added to favourites", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({
+                supportFragmentManager.beginTransaction().remove(newFragment).commit();
+            }, 600)
+
+
+            val intent = Intent(this, FoodDetailsActivity::class.java)
+
+
+            startActivityForResult(intent, 50)
+
         }
+
+//        FoodView?.setOnItemClickListener{_, _, position, _ ->
+//            val selectedFood = foodNameArray[position]
+//            val foodDetailIntent = Intent(this, FoodDetailsActivity::class.java)
+//
+//            startActivity(foodDetailIntent)
+//        }
 
     }
 
-    inner class FoodListAdapter(ctx : Context): ArrayAdapter<String>(ctx, 0){
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+
+        return true
+    }
 
 
-        /**
-         * Gets the size count of the array and returns it
-         * @return
-         */
-        override fun getCount() : Int{
-            return foodArray.size
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_one ->{
+                var intent = Intent(this, MovieListActivity::class.java)
+                startActivity(intent)
+
+            }
+            R.id.action_two ->{
+                var intent = Intent(this, BusListActivity::class.java)
+                startActivity(intent)
+
+            }
+            R.id.action_three -> {
+                var intent = Intent(this, NewsListActivity::class.java)
+                startActivity(intent)
+
+            }
+            R.id.action_four ->{
+                Toast.makeText(this, "Version 1.0 by Marcus Blais", Toast.LENGTH_LONG).show()
+            }
         }
-
-        /**
-         * Gets the position of the item in the foodArray and returns it
-         * @param position
-         * @return
-         */
+        return true
+    }
 
 
-        override fun getItem(position : Int) : String{
-            return foodArray.get(position)
-        }
 
-        /**
-         *
-         * sets the title of the text view with the index of the position , inflates the view and returns it
-         * @param position
-         * @param convertView
-         * @param parent
-         * @return
-         */
-        override fun getView(position : Int, convertView: View?, parent : ViewGroup) : View? {
-            var inflater = LayoutInflater.from(parent.getContext())
 
-            var result: View
-            result = inflater.inflate(R.layout.foodview_list_item, null)
-
-            val food_title = result.findViewById<TextView>(R.id.foodTitle)
-            val food_desc = result.findViewById<TextView>(R.id.foodDesc)
-
-            food_title.setText(getItem(position))
-          // food_desc.setText("Some details about the food")
-
+    inner class FoodQuery : AsyncTask<String, Integer, String>(){
+        override fun doInBackground(vararg params: String?): String {
+            query = URLEncoder.encode(params[0], "UTF-8")
+            var url = URL("https://api.edamam.com/api/food-database/parser?app_id=a79e98d4&app_key=1ae7a8747a7c27ea98a0124a85d9cc91&ingr=$query")
+            val Connection = url.openConnection() as HttpURLConnection
+            val stream = Connection.getInputStream()
+            var reader = BufferedReader(InputStreamReader(stream) as Reader?, 8)
+            var sb = StringBuilder()
+            var line = reader.readLine()
+            while(line != null){
+                sb.append(line!! + "\n")
+                line = reader.readLine()
+            }
+            var result = sb.toString()
+            var root = JSONObject(result)
+            var array = root.getJSONArray("parsed")
+            var foodObject = array.getJSONObject(0)
+            var food = foodObject.getJSONObject("food")
+            var nutrients = food.getJSONObject("nutrients")
+            fat = nutrients.getDouble("FAT").toString()
+            calories = nutrients.getDouble("ENERC_KCAL").toString()
+            name = root.getString("text")
+            publishProgress()
             return result
         }
 
-        /**
-         *
-         * Gets the item at the position index and returns it as a long
-         * @param position
-         * @retun
-         */
+        override fun onProgressUpdate(vararg values: Integer?) {
+            super.onProgressUpdate(*values)
+//            foodName.setText("Name: " + name)
+//            foodFat.setText("Fat: " + fat)
+//            foodCalories.setText("Calories: " + calories)
 
-        override fun getItemId(position : Int):Long{
-            val something = 3
-            return something.toLong()
+
+            foodNameArray.add(name)
+            foodFatArray.add(fat)
+            foodCalorieArray.add(calories)
+
+
+        }
+
+    }
+
+    val DATABASE_NAME = "Food.db"
+    val VERSION_NUM = 1
+    val TABLE_NAME = "Food"
+
+
+    inner class FoodDatabaseHelper : SQLiteOpenHelper(this@FoodListActivity, DATABASE_NAME, null, VERSION_NUM){
+        val KEY_FOOD = "Food"
+        val KEY_ID = "_id"
+        val KEY_CALORIES = "Calories"
+        val KEY_FAT = "Fat"
+
+        override fun onCreate(db: SQLiteDatabase) {
+            db.execSQL("CREATE TABLE $TABLE_NAME ( _id INTEGER PRIMARY KEY AUTOINCREMENT, $KEY_FOOD TEXT, $KEY_CALORIES TEXT, $KEY_FAT TEXT ) ") //create the table
+        }
+
+        override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME") //deletes old data
+            onCreate(db)
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 50) {
+            if (resultCode == RESULT_OK) {
+
+
+               val returnedName = data!!.getStringExtra("Name")
+                val returnedCalories =  data!!.getStringExtra("Calories")
+                val returnedFat =  data!!.getStringExtra("Fat")
+                var infoToPass = Bundle()
+
+                      infoToPass.putString("Name", returnedName)
+                      infoToPass.putString("Calories", returnedCalories)
+                      infoToPass.putString("Fat", returnedFat)
+                var newFragment = SearchFragment()
+                newFragment.arguments = infoToPass
+                supportFragmentManager.beginTransaction().replace(R.id.foodListContainer, newFragment).commit();
+
+            }
+        }
+    }
+
 }
+
+
+
+
