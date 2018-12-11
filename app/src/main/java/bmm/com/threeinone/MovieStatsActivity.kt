@@ -14,7 +14,7 @@ class MovieStatsActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         val fragment = movieStatsFragment()
-        fragmentTransaction.add(R.id.statsFragment, fragment)
+        fragmentTransaction.add(R.id.movie_StatsFragment, fragment)
         fragmentTransaction.commit()
     }
 }

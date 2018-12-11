@@ -30,6 +30,7 @@ var avgYear = 0
 
 //The user can view statistics on the shortest, longest, and average movie run time and year of the movies.
 class movieStatsFragment : Fragment() {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -75,28 +76,35 @@ var avgSum = 0
             minRuntime = minOf(minRuntime, runTime)
             yearSum = yearSum + year
             count++
-//            Log.i("Something", runTime)
-            //results.getString(runTime).split(" ")[0]
-//            var thisRunTime = result.getInt()
-//            favListArray.add(FavoriteMovies(results.getString(title), results.getString(desc)))
+
+            /**
+             * @param container
+             * @param inflater
+             */
+
             results.moveToNext()
         }
 
-        var avgRunTimeView = view.findViewById<TextView>(R.id.avgRunTime)
-        var avgYearView = view.findViewById<TextView>(R.id.avgYear)
-        var maxRunTimeView = view.findViewById<TextView>(R.id.maxRunTime)
-        var minRunTimeView = view.findViewById<TextView>(R.id.minRunTime)
+        var avgRunTimeView = view.findViewById<TextView>(R.id.movie_avgRunTime)
+        var avgYearView = view.findViewById<TextView>(R.id.movie_avgYear)
+        var maxRunTimeView = view.findViewById<TextView>(R.id.movie_maxRunTime)
+        var minRunTimeView = view.findViewById<TextView>(R.id.movie_minRunTime)
         avgSum = avgSum.div(count)
         yearSum = yearSum.div(count)
 
-        avgRunTimeView.text = avgSum.toString()
-        avgYearView.text = yearSum.toString()
-        maxRunTimeView.text = maxRunTime.toString()
-        minRunTimeView.text = minRunTime.toString()
+        avgRunTimeView.text = "Average Sum: " + avgSum.toString()
+        avgYearView.text = "Year Sum: " + yearSum.toString()
+        maxRunTimeView.text = "Max Runtime: " + maxRunTime.toString()
+        minRunTimeView.text = "Min Runtime: " + minRunTime.toString()
 
 
-
-
+        /**
+         * @param container
+         * @param inflater
+         * @param savedInstanceState
+         * @return the inflated view is returned at the end here
+         *
+         */
 
         return view
     }

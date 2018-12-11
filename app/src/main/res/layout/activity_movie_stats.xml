@@ -10,7 +10,7 @@
     <fragment android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:name="bmm.com.threeinone.movieStatsFragment"
-              android:id="@+id/statsFragment"
+              android:id="@+id/movie_StatsFragment"
     />
 
 </android.support.constraint.ConstraintLayout>

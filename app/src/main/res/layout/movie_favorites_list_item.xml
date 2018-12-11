@@ -23,7 +23,7 @@
               android:background="#b00"
               android:textColor="@color/white"
               android:id="@+id/movieDelete"
-              android:text="DELETE"
+              android:text="@string/movie_delete"
              android:layout_marginTop="10dp"
               android:layout_marginBottom="10dp"
     />

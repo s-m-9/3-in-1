@@ -30,11 +30,18 @@ class MovieFavoriteActivity : AppCompatActivity() {
     lateinit var dbHelper : FavDatabaseHelper
     val MOVIE_TABLE = "FavoriteMovies"
 
+    /**
+     * shows the favorite movies saved
+     *
+     * @param savedInstanceState
+     *
+     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_favorite)
 
-        var statsBtn = findViewById<Button>(R.id.statsBtn)
+        var statsBtn = findViewById<Button>(R.id.MovieStatsBtn)
         favView = findViewById<ListView>(R.id.MovieFavView)
 //
         statsBtn.setOnClickListener {
@@ -70,6 +77,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
 
     fun deleteMovie(position: Int){
 
+
         val idQuery = db.query(MOVIE_TABLE, arrayOf("_id"), " $KEY_TITLE = ? ", arrayOf(favListArray.get(position).favTitle), null, null, null)
         idQuery.moveToFirst()
         var idIndex = idQuery.getColumnIndex("_id")
@@ -84,10 +92,23 @@ class MovieFavoriteActivity : AppCompatActivity() {
 
     inner class MovieFavListAdapter(ctx : Context): ArrayAdapter<FavoriteMovies>(ctx, 0){
         override fun getCount() : Int{
+
+
+            /**
+             * @return the size of the array is returned here
+             */
+
+
             return favListArray.size
         }
 
         override fun getItem(position : Int) : FavoriteMovies {
+
+            /**
+             * @return the position of the favlistarray is returned
+             */
+
+
             return favListArray.get(position)
         }
         override fun getView(position : Int, convertView: View?, parent : ViewGroup) : View? {
@@ -111,11 +132,22 @@ class MovieFavoriteActivity : AppCompatActivity() {
             movie_title.setText(getItem(position).favTitle)
             movie_desc.setText(getItem(position).favDesc)
 
+
+            /**
+             * @return the result is returned here
+             */
+
             return result
         }
 
         override fun getItemId(position : Int):Long{
             val something = 3
+
+            /**
+             * @param position
+             * @return the id is returned here and sent to long format
+             */
+
             return something.toLong()
         }
     }
@@ -126,28 +158,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
 
 
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        val titleFav = findViewById<TextView>(R.id.favTitle)
-//
-//        val descFav = findViewById<TextView>(R.id.favDesc)
-//
-//
-//
-//        var title = data?.getStringExtra("title")
-//        var desc = data?.getStringExtra("desc")
-//
-//
-//
-//
-//
-//
-//        titleFav.setText(title)
-//
-//        descFav.setText(desc)
-//
-//    }
+
 }
 
 

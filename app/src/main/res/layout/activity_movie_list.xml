@@ -30,9 +30,9 @@
 
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
-    android:hint="Search"
-    android:id="@+id/searchBar"
-              android:layout_toLeftOf="@+id/searchBtn"
+    android:hint="@string/movie_search"
+    android:id="@+id/movieSearchBar"
+              android:layout_toLeftOf="@+id/MovieSearchBtn"
 
               android:layout_alignParentStart="true"
               android:layout_alignParentTop="true"
@@ -40,31 +40,31 @@
     />
     <Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:id="@+id/searchBtn"
-            android:text="Search"
+            android:id="@+id/MovieSearchBtn"
+            android:text="@string/movie_search"
             android:layout_alignParentEnd="true"
 
             android:textColor="@android:color/black" android:textColorLink="@android:color/black"/>
 
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/favBtn"
-            android:text="Favorites"
-            android:layout_below="@+id/searchBar"
+            android:id="@+id/MovieFavBtn"
+            android:text="@string/movie_favoritesBtn"
+            android:layout_below="@+id/movieSearchBar"
 
             android:background="@color/lightred" android:textColor="@android:color/white"/>
 
     <ProgressBar android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-    android:layout_below="@+id/favBtn"
+    android:layout_below="@+id/MovieFavBtn"
 
-    android:id="@+id/progressBar"
+    android:id="@+id/movieProgressBar"
     android:visibility="invisible"/>
 
     <ListView android:id="@+id/MovieView"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:layout_below="@+id/progressBar">
+    android:layout_below="@+id/movieProgressBar">
 
 
     </ListView>
@@ -72,7 +72,7 @@
             android:text="Not Found"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true" android:id="@+id/error"
+            android:layout_alignParentTop="true" android:id="@+id/movieError"
             android:layout_marginTop="58dp"
 
     />
@@ -86,10 +86,10 @@
                 android:fitsSystemWindows="true"
                 android:layout_gravity="start"
 
-                app:headerLayout="@layout/nav_header"
+                app:headerLayout="@layout/movie_nav_header"
 
-app:menu="@menu/nav_menu"
-                android:id="@+id/navigation_view">
+app:menu="@menu/movie_nav_menu"
+                android:id="@+id/movie_navigation_view">
 
         </android.support.design.widget.NavigationView>
 

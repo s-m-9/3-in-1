@@ -51,7 +51,7 @@ class MoviesDetailsActivity: AppCompatActivity() {
         db = dbHelper.writableDatabase //open your database
 
 
-        var addBtn = findViewById<Button>(R.id.addBtn)
+        var addBtn = findViewById<Button>(R.id.movieAddBtn)
 
         addBtn.setOnClickListener{
             var builder = AlertDialog.Builder(this)
@@ -59,7 +59,7 @@ class MoviesDetailsActivity: AppCompatActivity() {
 
             builder.setPositiveButton("OK", {dialog, id ->
 
-//                    val selectedMovie = listArray[position]
+
 
                 val newRow = ContentValues()
                 newRow.put(KEY_TITLE, title)
@@ -109,7 +109,11 @@ class MoviesDetailsActivity: AppCompatActivity() {
         val runtimeView = findViewById<TextView>(R.id.movieRuntime)
         val actorsView = findViewById<TextView>(R.id.movieActors)
 
-
+        /**
+         * @param requestCode
+         * @param resultCode
+         * @param data
+         */
 
         title = data?.getStringExtra("title")
         year = data?.getStringExtra("year")
@@ -126,12 +130,12 @@ class MoviesDetailsActivity: AppCompatActivity() {
 
 
         titleView.setText(title)
-        yearView.setText(year)
+        yearView.setText("Year: " + year)
         posterView.setImageBitmap(bmp)
-        descView.setText(desc)
-        ratingView.setText(rating)
-        runtimeView.setText(runtime)
-        actorsView.setText(actors)
+        descView.setText("Plot: " + desc)
+        ratingView.setText("Rating: " + rating)
+        runtimeView.setText("Runtime: " + runtime)
+        actorsView.setText("Actors: " + actors)
 
     }
 
