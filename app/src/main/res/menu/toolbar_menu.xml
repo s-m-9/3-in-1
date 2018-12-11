@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_one"
+          android:title="Meal"
+          android:icon="@drawable/meal"
+          android:orderInCategory="100"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_two"
+          android:title="Cow"
+          android:icon="@drawable/cow"
+          android:orderInCategory="200"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_three"
+          android:title="Pokedex"
+          android:icon="@drawable/pokedex"
+          android:orderInCategory="300"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_four"
+          android:title="Bar Chart"
+          android:icon="@drawable/barchart"
+          android:orderInCategory="400"
+          app:showAsAction="never" />
+
+
+</menu>

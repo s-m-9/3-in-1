@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="bmm.com.threeinone">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:allowBackup="true"
@@ -12,10 +12,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".ChooseActivity">
-
         </activity>
-
-        <activity android:name=".BusListActivity">
+        <activity android:name=".BusSearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -26,11 +24,12 @@
         <activity android:name=".NewsListActivity"/>
         <activity android:name=".NewsDetailsActivity"/>
         <activity android:name=".MoviesDetailsActivity"/>
-        <activity android:name=".BusDetailsActivity" />
+        <activity android:name=".BusDetailsActivity"/>
         <activity android:name=".FoodListActivity">
-
         </activity>
         <activity android:name=".FoodDetailsActivity">
+        </activity>
+        <activity android:name=".BusListActivity">
         </activity>
     </application>
 

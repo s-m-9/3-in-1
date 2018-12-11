@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".BusSearchActivity">
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/BusToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/purple"
+            app:titleTextColor="@color/white"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <android.support.v4.widget.DrawerLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/BusToolbar"
+            android:id="@+id/drawer_layout">
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/BusToolbar"
+        >
+
+
+            <EditText android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentStart="true"
+                      android:layout_toLeftOf="@id/BusSearchButton"
+                      android:id="@+id/BusSearchBar"
+                      android:hint="Search"
+                      android:layout_alignParentTop="true"
+            />
+
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Search"
+                    android:id="@+id/BusSearchButton"
+
+            />
+
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@id/BusSearchBar"
+                      android:text="@string/bus_stop_not_found"
+                      android:textSize="30dp"
+                      android:visibility="invisible"
+                      android:id="@+id/BusStopNotFound"
+            />
+
+            <ProgressBar android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_below="@+id/BusSearchBar"
+                         android:layout_centerHorizontal="true"
+                         android:id="@+id/progressBar"
+                         android:visibility="invisible"
+            />
+
+            <ListView
+                    android:id="@+id/BusView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/BusSearchBar"
+                    android:layout_alignParentStart="true"
+            />
+        </RelativeLayout>
+
+        <android.support.design.widget.NavigationView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:headerLayout="@layout/nav_header"
+                android:id="@+id/navigation_view"
+                android:fitsSystemWindows="true"
+                android:layout_gravity="start"
+                app:menu="@menu/nav_menu"
+        >
+        </android.support.design.widget.NavigationView>
+    </android.support.v4.widget.DrawerLayout>
+
+
+</RelativeLayout>
+
+
+

@@ -7,36 +7,28 @@
         android:layout_height="match_parent"
         tools:context=".BusDetailsActivity" android:orientation="vertical">
 
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="@string/bus_destination"
-              android:id="@+id/destinationText"
+    <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?actionBarSize"
+            android:id="@+id/busTabs"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/purple"
+            app:tabBackground="@color/white"
+            app:tabIndicatorHeight="4dp"
+            app:tabTextColor="#000"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabMode="fixed">
 
-    />
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/latText"
-              android:text="@string/bus_latitude"/>
+    </android.support.design.widget.TabLayout>
 
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/longText"
-              android:text="@string/bus_longitude"/>
+    <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/busViewPager">
 
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/gpsText"
-              android:text="@string/bus_gps_speed"/>
+    </android.support.v4.view.ViewPager>
 
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/startTimeText"
-              android:text="@string/bus_start_time"/>
-
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/scheduleText"
-              android:text="@string/adjusted_schedule_time"/>
 
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
