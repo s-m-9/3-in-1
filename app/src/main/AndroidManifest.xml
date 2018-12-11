@@ -2,11 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="bmm.com.threeinone">
 
-<<<<<<< HEAD
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
-=======
->>>>>>> cfda888d32233c50d49015f19de16a3b9055f264
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -15,18 +14,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".ChooseActivity">
-<<<<<<< HEAD
+
         </activity>
         <activity android:name=".BusSearchActivity">
-=======
->>>>>>> cfda888d32233c50d49015f19de16a3b9055f264
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity android:name=".MovieListActivity"/>
         <activity android:name=".NewsListActivity"/>
         <activity android:name=".NewsDetailsActivity"/>
@@ -40,8 +38,7 @@
         </activity>
 
         <activity android:name=".NewsFavouritesActivity"/>
-=======
->>>>>>> cfda888d32233c50d49015f19de16a3b9055f264
+
     </application>
 
 </manifest>

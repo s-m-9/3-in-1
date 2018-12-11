@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-<<<<<<< HEAD
+
     <!--<style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">-->
         <!-- Customize your theme here. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -16,10 +16,10 @@
 
 
 
-=======
-    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-    </style>
 
->>>>>>> cfda888d32233c50d49015f19de16a3b9055f264
+    <!--<style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--</style>-->
+
+
 </resources>

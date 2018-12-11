@@ -22,4 +22,6 @@
     <color name="colorDimGrey">#696969</color>
     <color name="colorOffWhite">#FAFAFA</color>
     <color name="colorDarkLateGrey">#2F4F4F</color>
+    <color name="white">#ffffff</color>
+    <color name="purple">#3949AB</color>
 </resources>
