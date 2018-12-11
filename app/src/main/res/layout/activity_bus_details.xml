@@ -32,6 +32,6 @@
 
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/favouritesButton"
+            android:id="@+id/busFavouritesButton"
             android:text="@string/bus_add_to_favourites_button"/>
 </LinearLayout>

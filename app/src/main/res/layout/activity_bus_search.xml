@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/BusToolbar"
-            android:id="@+id/drawer_layout">
+            android:id="@+id/bus_drawer_layout">
         <RelativeLayout android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/BusToolbar"
@@ -58,7 +58,7 @@
                          android:layout_height="wrap_content"
                          android:layout_below="@+id/BusSearchBar"
                          android:layout_centerHorizontal="true"
-                         android:id="@+id/progressBar"
+                         android:id="@+id/bus_progressBar"
                          android:visibility="invisible"
             />
 
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 app:headerLayout="@layout/nav_header"
-                android:id="@+id/navigation_view"
+                android:id="@+id/bus_navigation_view"
                 android:fitsSystemWindows="true"
                 android:layout_gravity="start"
                 app:menu="@menu/nav_menu"

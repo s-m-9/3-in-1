@@ -316,7 +316,7 @@ class BusDetailsActivity : AppCompatActivity() {
     inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         // Holds the TextView that will add each animal to
 
-        val destination = view.destinationText
+        val destination = view.busDestinationText
         val location = view.position
         val gpsText = view.gpsText
         val startTimeText = view.startTimeText

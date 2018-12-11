@@ -72,11 +72,11 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         setSupportActionBar(toolbar) // show toolbar
 
         //add navigation to toolbar
-        var drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
         var toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
-        var navView = findViewById<NavigationView>(R.id.navigation_view)
+        var navView = findViewById<NavigationView>(R.id.bus_navigation_view)
         navView.setNavigationItemSelectedListener(this)
 
         // Bus search
@@ -145,7 +145,7 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             searchBar.setText("")
         }
 
-        progress_bar = findViewById<ProgressBar>(R.id.progressBar)
+        progress_bar = findViewById<ProgressBar>(R.id.bus_progressBar)
         bus_view = findViewById<ListView>(R.id.BusView)
 
         savedListAdapter = SavedRouteAdapter(this)
@@ -287,7 +287,7 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
         }
 
-        var drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
