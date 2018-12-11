@@ -22,6 +22,7 @@
     <string name="news_btn_fav">Add to Favourites</string>
 
     <string name="movie_title">Title</string>
+    <string name="movie_year">Year</string>
     <string name="movie_rating">Rating</string>
     <string name="movie_runtime">Runtime</string>
     <string name="movie_actors">Actors</string>
@@ -35,4 +36,10 @@
     <string name="bus_start_time">Bus Start Time</string>
     <string name="adjusted_schedule_time">Bus Adjusted Schedule Time</string>
     <string name="bus_add_to_favourites_button">Add To Favourites</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

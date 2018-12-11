@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/movie_item"
+android:icon="@drawable/movie"
+
+            android:title="Movie Information">
+
+    </item>
+
+    <item
+            android:id="@+id/food_item"
+android:icon="@drawable/food"
+            android:title="Nutrition Database">
+
+    </item>
+
+    <item
+            android:icon="@drawable/news"
+            android:id="@+id/news_item"
+
+            android:title="News Reader">
+
+    </item>
+
+    <item
+            android:icon="@drawable/bus"
+            android:id="@+id/bus_item"
+
+            android:title="Bus Route">
+
+    </item>
+</menu>
