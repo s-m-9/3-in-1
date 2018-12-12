@@ -35,8 +35,7 @@ class MoviesDetailsActivity: AppCompatActivity() {
 
 
     lateinit var db : SQLiteDatabase
-    lateinit var results : Cursor
-    lateinit var dbHelper : FavDatabaseHelper
+    lateinit var results : TheDatabaseHelper
     val MOVIE_TABLE = "FavoriteMovies"
 
 //    lateinit var myAdapter : MyAdapter
@@ -47,7 +46,7 @@ class MoviesDetailsActivity: AppCompatActivity() {
         setContentView(R.layout.activity_movies_details)
 
 
-        dbHelper = FavDatabaseHelper(this) //get a helper object
+        dbHelper = TheDatabaseHelper(this) //get a helper object
         db = dbHelper.writableDatabase //open your database
 
 
@@ -69,11 +68,11 @@ class MoviesDetailsActivity: AppCompatActivity() {
 
 
                 db.insert(MOVIE_TABLE, "", newRow)
-                results = db.query( MOVIE_TABLE, arrayOf("_id", KEY_TITLE ), null, null,null,null,null)
+//                results = db.query( MOVIE_TABLE, arrayOf("_id", KEY_TITLE ), null, null,null,null,null)
 
 
 
-                var s = results.getCount()
+//                var s = results.getCount()
                 Snackbar.make(addBtn, "Saved To Favorites", Snackbar.LENGTH_LONG).show();
 
 

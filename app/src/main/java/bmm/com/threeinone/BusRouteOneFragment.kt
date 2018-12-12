@@ -41,10 +41,12 @@ class BusRouteOneFragment : Fragment() {
         val dataPassed = arguments
         tripArray = dataPassed!!.getParcelableArrayList<Trip>("tripList")
         var average = dataPassed!!.getFloat("average").toString()
-        averageText.text = "Average Adjusted Schedule Time $average"
+        averageText.text = "Average Adjusted Schedule Time: $average"
 
         if (tripArray.isEmpty()) {
             noBusses.visibility = View.VISIBLE
+            averageText.visibility = View.INVISIBLE
+
         }
 
 

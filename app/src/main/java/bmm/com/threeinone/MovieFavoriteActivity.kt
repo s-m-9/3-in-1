@@ -27,7 +27,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
     lateinit var favView: ListView
     lateinit var db : SQLiteDatabase
     lateinit var results : Cursor
-    lateinit var dbHelper : FavDatabaseHelper
+    lateinit var dbHelper : TheDatabaseHelper
     val MOVIE_TABLE = "FavoriteMovies"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
         favView.adapter = movieFavAdapter
 
 
-        dbHelper = FavDatabaseHelper(this) //get a helper object
+        dbHelper = TheDatabaseHelper(this) //get a helper object
         db = dbHelper.writableDatabase //open your database
 
 

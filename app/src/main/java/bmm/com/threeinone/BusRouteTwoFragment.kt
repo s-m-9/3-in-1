@@ -41,6 +41,7 @@ class BusRouteTwoFragment : Fragment() {
         var averageText = screen.findViewById<TextView>(R.id.average2)
         if (tripArray.isEmpty()) {
             noBusses.visibility = View.VISIBLE
+            averageText.visibility = View.INVISIBLE
         }
 
         var average = dataPassed!!.getFloat("average").toString()

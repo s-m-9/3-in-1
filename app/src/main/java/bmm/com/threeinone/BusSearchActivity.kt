@@ -109,7 +109,7 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
         searchButton.setOnClickListener {
-            Toast.makeText(this, "This is toast", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show()
             searchResult = searchBar.text.toString()
 
             hideKeyboard()
@@ -183,9 +183,23 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             val bus_stop_delete = result.findViewById<TextView>(R.id.BusTrash)
 
             bus_stop_delete.setOnClickListener {
-                val stop_id = savedIDArray.get(position)
-                Log.i("Item", "Item Number $stop_id")
-                deleteStop(stop_id.toLong(), position)
+                var builder = android.app.AlertDialog.Builder(this@BusSearchActivity)
+                builder.setTitle("Are you sure you want to delete this from favorites?")
+
+                builder.setPositiveButton("OK", {dialog, id ->
+//                var s = results.getCount()
+                    val stop_id = savedIDArray.get(position)
+                    Log.i("Item", "Item Number $stop_id")
+                    deleteStop(stop_id.toLong(), position)
+                    Snackbar.make(bus_stop_delete, "Deleted From Favorites", Snackbar.LENGTH_LONG).show();
+                })
+                builder.setNegativeButton("Cancel", {dialog, id ->
+
+                })
+
+                var dialog = builder.create()
+                dialog.show()
+
             }
 
 
@@ -233,57 +247,25 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.chat_item -> {
-                // System Notification
-                var mBuilder = NotificationCompat.Builder(this, "Channel_Name")
-                    .setSmallIcon(R.drawable.cow)
-                    .setAutoCancel(true)
-                    .setContentTitle("Let's chat")
-                    .setContentText("Chat with me ;) Click here: http://jhakje.owwuqjab")
-
-                var resultIntent = Intent(this, FoodListActivity::class.java)
-
-                var resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                mBuilder.setContentIntent(resultPendingIntent)
-                var mNotificationId = 1
-                var mNotifyMgr = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-                mNotifyMgr.notify(mNotificationId, mBuilder.build())
-            }
-            R.id.list_item -> {
-                var mBuilder = NotificationCompat.Builder(this, "Channel_Name")
-                    .setSmallIcon(R.drawable.meal)
-                    .setAutoCancel(true) // <-- change
-                    .setContentTitle("List Items") // <-- change
-                    .setContentText("List") // <-- change
-
+            R.id.movie_item -> {
                 var resultIntent = Intent(this, MovieListActivity::class.java) // <-- change
-
-                var resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                mBuilder.setContentIntent(resultPendingIntent)
-                var mNotificationId = 2
-                var mNotifyMgr = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-                mNotifyMgr.notify(mNotificationId, mBuilder.build())
+                startActivity(resultIntent)
+                finish()
             }
-            R.id.contact_thing -> {
-                var mBuilder = NotificationCompat.Builder(this, "Channel_Name")
-                    .setSmallIcon(R.drawable.meal)
-                    .setAutoCancel(true) // <-- change
-                    .setContentTitle("List Items") // <-- change
-                    .setContentText("List") // <-- change
-
-
-                var emailIntent = Intent(Intent.ACTION_SENDTO)
-                var resultPendingIntent = PendingIntent.getActivity(this, 0, emailIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                mBuilder.addAction(R.drawable.pokedex, "Send email",  resultPendingIntent)
-
-                var smsIntent = Intent(Intent.ACTION_SEND)
-                var resultSMSIntent = PendingIntent.getActivity(this, 0, smsIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                mBuilder.addAction(R.drawable.barchart, "Send SMS",  resultSMSIntent)
-
-
-                var mNotificationId = 3 // <-- change
-                var mNotifyMgr = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-                mNotifyMgr.notify(mNotificationId, mBuilder.build())
+            R.id.food_item -> {
+                var resultIntent = Intent(this, FoodListActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+            R.id.news_item -> {
+                var resultIntent = Intent(this, NewsListActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+            R.id.bus_item -> {
+                var resultIntent = Intent(this, BusSearchActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
             }
         }
 

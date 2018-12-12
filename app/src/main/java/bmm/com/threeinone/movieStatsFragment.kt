@@ -20,7 +20,7 @@ private const val ARG_PARAM2 = "param2"
 
 lateinit var db : SQLiteDatabase
 lateinit var results : Cursor
-lateinit var dbHelper : FavDatabaseHelper
+lateinit var dbHelper : TheDatabaseHelper
 
 var avgRunTime = 0
 var minRunTime = 0
@@ -42,7 +42,7 @@ class movieStatsFragment : Fragment() {
 
         var view = inflater.inflate(R.layout.fragment_movie_stats, container, false)
 
-        dbHelper = FavDatabaseHelper(view!!.context) //get a helper object
+        dbHelper = TheDatabaseHelper(view!!.context) //get a helper object
         db = dbHelper.writableDatabase //open your database
 
 
