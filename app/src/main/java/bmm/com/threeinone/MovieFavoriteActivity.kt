@@ -30,13 +30,20 @@ class MovieFavoriteActivity : AppCompatActivity() {
     lateinit var dbHelper : TheDatabaseHelper
     val MOVIE_TABLE = "FavoriteMovies"
 
+    /**
+     * shows the favorite movies saved
+     *
+     * @param savedInstanceState
+     *
+     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_favorite)
 
-        var statsBtn = findViewById<Button>(R.id.statsBtn)
+        var statsBtn = findViewById<Button>(R.id.MovieStatsBtn)
         favView = findViewById<ListView>(R.id.MovieFavView)
-//
+
         statsBtn.setOnClickListener {
             startActivity(Intent(this, MovieStatsActivity::class.java))
         }
@@ -70,6 +77,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
 
     fun deleteMovie(position: Int){
 
+
         val idQuery = db.query(MOVIE_TABLE, arrayOf("_id"), " $KEY_TITLE = ? ", arrayOf(favListArray.get(position).favTitle), null, null, null)
         idQuery.moveToFirst()
         var idIndex = idQuery.getColumnIndex("_id")
@@ -83,13 +91,47 @@ class MovieFavoriteActivity : AppCompatActivity() {
     }
 
     inner class MovieFavListAdapter(ctx : Context): ArrayAdapter<FavoriteMovies>(ctx, 0){
+
+
+
+
+
+        /**
+         * @return the size of the array is returned here in the
+         * getCount function
+         */
         override fun getCount() : Int{
+
             return favListArray.size
         }
 
+
+
+
+
+        /**
+         * @return the position of the favlistarray is returned here in
+         * the getItem function
+         */
         override fun getItem(position : Int) : FavoriteMovies {
+
             return favListArray.get(position)
         }
+
+
+
+
+
+
+
+
+        /**
+         * @param position
+         * @param convertView
+         * @param parent
+         * @return the result is returned here in the getView
+         * function
+         */
         override fun getView(position : Int, convertView: View?, parent : ViewGroup) : View? {
             var inflater = LayoutInflater.from(parent.getContext())
 
@@ -111,11 +153,28 @@ class MovieFavoriteActivity : AppCompatActivity() {
             movie_title.setText(getItem(position).favTitle)
             movie_desc.setText(getItem(position).favDesc)
 
+
+
+
             return result
         }
 
+
+
+
+
+
+        /**
+         * @param position
+         * @return the id is returned here in
+         * the getItemId function and sent to
+         * long format
+         */
+
         override fun getItemId(position : Int):Long{
             val something = 3
+
+
             return something.toLong()
         }
     }
@@ -126,28 +185,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
 
 
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        val titleFav = findViewById<TextView>(R.id.favTitle)
-//
-//        val descFav = findViewById<TextView>(R.id.favDesc)
-//
-//
-//
-//        var title = data?.getStringExtra("title")
-//        var desc = data?.getStringExtra("desc")
-//
-//
-//
-//
-//
-//
-//        titleFav.setText(title)
-//
-//        descFav.setText(desc)
-//
-//    }
+
 }
 
 

@@ -8,7 +8,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
 import android.support.v4.app.NotificationCompat
 import android.support.v4.view.GravityCompat
@@ -34,6 +36,24 @@ import java.net.MalformedURLException
 import java.net.URLEncoder
 
 
+/**
+ * Title: Movie Information
+ * @author: Josh Boose
+ * Date: December 12th 2018
+ */
+
+
+/**
+ *The two data classes set up all of the movie items such as
+ * @param movieTitle
+ * @param movieYear
+ * @param movieposter
+ * @param movieDesc
+ * @param movieRating
+ * @param movieRuntime
+ * @param movieActors
+ * @param moviePosterURL
+ */
 data class Movie(var moviePosterURL: String,
                  var movieTitle: String,
                  var movieYear: String,
@@ -53,6 +73,8 @@ data class MovieListItem(var movieTitle: String,
                          )
 
 
+
+
 class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var listArray : ArrayList<MovieListItem> = ArrayList<MovieListItem>()
@@ -62,6 +84,12 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var searchBtn : Button
    lateinit var error : TextView
 
+    /**
+     * @param savedInstanceState
+     * In the onCreate function we are making things such as the
+     * favBtn, searchBtn, etc functional
+     */
+    @RequiresApi(Build.VERSION_CODES.CUPCAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
@@ -79,18 +107,18 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         drawer.addDrawerListener(toggle)
         toggle.syncState()
-        var navView = findViewById<NavigationView>(R.id.navigation_view)
+        var navView = findViewById<NavigationView>(R.id.movie_navigation_view)
         navView.setNavigationItemSelectedListener(this)
 
 
 
 
 
-        progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        error = findViewById(R.id.error)
-        error.visibility = View.INVISIBLE
-        searchBtn = findViewById<Button>(R.id.searchBtn)
-        var favBtn = findViewById<Button>(R.id.favBtn)
+        progressBar = findViewById<ProgressBar>(R.id.movieProgressBar)
+        error = findViewById(R.id.movieError)
+error.visibility = View.INVISIBLE
+        searchBtn = findViewById<Button>(R.id.MovieSearchBtn)
+        var favBtn = findViewById<Button>(R.id.MovieFavBtn)
 
 
         favBtn.setOnClickListener {
@@ -110,7 +138,7 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             Toast.makeText(this, R.string.gettingResults, Toast.LENGTH_SHORT).show()
 
-            var edit = findViewById<EditText>(R.id.searchBar)
+            var edit = findViewById<EditText>(R.id.movieSearchBar)
             var myQuery = MovieListQuery()
             myQuery.execute(edit.text.toString())
         }
@@ -119,7 +147,7 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
 
-       // progressBar.visibility = View.VISIBLE
+
 
         movieView = findViewById(R.id.MovieView)
 
@@ -153,10 +181,11 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 
-
-
-
-
+    /**
+     * @param menu
+     * @return in the onCreateOptionsMenu function, we are
+     * going to return true
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         return true
@@ -168,7 +197,11 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
 
-
+    /**
+     * @param item
+     * @return this is where one of our 4 activities gets called and opened from the toolbar.
+     * onNavigationItemSelected function is based solely on this and closing the drawer.
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -194,6 +227,10 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawer.closeDrawer(GravityCompat.START)
 
         return true
+
+
+
+
     }
 
 
@@ -211,13 +248,42 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
     inner class MovieListAdapter(ctx : Context): ArrayAdapter<MovieListItem>(ctx, 0){
+
+
+        /**
+         * @return the size of the list array gets returned here in the getCount function
+         */
         override fun getCount() : Int{
+
             return listArray.size
         }
 
+
+
+
+
+
+        /**
+         * @param position
+         * @return the item's position gets returned here in the getItem function
+         *
+         */
         override fun getItem(position : Int) : MovieListItem {
+
             return listArray.get(position)
         }
+
+
+
+
+
+        /**
+         * @param position
+         * @param convertView
+         * @param parent
+         * @return the view gets inflated with result here in the getView function and
+         * the movie title, poster and year are displayed on the view
+         */
         override fun getView(position : Int, convertView: View?, parent : ViewGroup) : View? {
             var inflater = LayoutInflater.from(parent.getContext())
 
@@ -232,11 +298,22 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
            movie_poster.setImageBitmap(getItem(position).moviePoster)
             movie_year.setText(getItem(position).movieYear)
 
+
+
             return result
         }
 
+
+
+
+        /**
+         * @param position
+         * @return the item Id is returned here in the getItemId function
+         */
         override fun getItemId(position : Int):Long{
             val something = 3
+
+
             return something.toLong()
         }
     }
@@ -256,19 +333,21 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         override fun doInBackground(vararg params: String): String {
 
             var query = URLEncoder.encode(params[0], "UTF-8")
-//            http://www.omdbapi.com/?i=tt3896198&apikey=ea523988&r=xml&t=star+wars
-            //val url = URL("http://www.omdbapi.com/?i=tt3896198&apikey=ea523988&r=xml&t=$query")
+
             val url = URL ("http://www.omdbapi.com/?apikey=ea523988&r=xml&t=$query")
             var connection = url.openConnection() as HttpURLConnection //goes to the server
             var response = connection.getInputStream()
-
+            /**
+             * The url is created here and we are starting
+             * a new pull parser
+             */
 
             val factory = XmlPullParserFactory.newInstance()
             factory.setNamespaceAware(false)
             val xpp = factory.newPullParser()
             xpp.setInput(response, "UTF-8")  //read XML from server
 
-//            http://www.omdbapi.com/?i=tt3896198&apikey=ea523988&r=xml&s=how&page=1
+
             while (xpp.eventType != XmlPullParser.END_DOCUMENT)
             {
                 when(xpp.eventType){
@@ -282,7 +361,10 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                             val runtime = xpp.getAttributeValue(null, "runtime")
                            val actors = xpp.getAttributeValue(null, "actors")
 
-
+                            /**
+                             * This whole section inside the XmlPullParser is dedicated to grabbing all
+                             * of the movie data and setting them to actual variable names
+                             */
                             val poster = xpp.getAttributeValue(null, "poster")
                             var imageBitmap : Bitmap? = null
                             if (poster != null){
@@ -301,11 +383,23 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
                             val movieListObj = MovieListItem(title, year, imageBitmap, desc, rating, runtime, actors )
                             listArray.add(movieListObj)
+
+                            /**
+                             * @param params
+                             * In this section, we are creating an object that holds
+                             * all of the list items of the movie, and then adding
+                             * it to the array
+                             */
                         }
 
                         if(xpp.name == "error"){
                             errorType = xpp.nextText()
                             publishProgress()
+                            /**
+                             * @param params
+                             * @return In this if statement, we are checking if an error is found, if so, we return
+                             * "Error!"
+                             */
                             return "Error!"
                         }
 
@@ -323,7 +417,10 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             }
 
-
+            /**
+             * @param params
+             * @return Finished is returned once all the data has been grabbed and parsed
+             */
 
             return "Finished"
         }
@@ -335,10 +432,22 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         override fun onProgressUpdate(vararg values: Integer?) {
             movielistAdapter.notifyDataSetChanged()
 
+            /**
+             * @param values
+             *
+             */
+
         }
 
 
-        override fun onPostExecute(result: String?) { //at the end
+        override fun onPostExecute(result: String?) {
+            //at the end
+
+            /**
+             * @param result
+             * Once a movie has been searched, the progress bar gets hidden
+             * and if the list array is empty, the error message gets displayed
+             */
             progressBar.visibility = View.INVISIBLE //hides progress bar
             if(listArray.isEmpty()) {
                 error.setText(errorType)
@@ -347,16 +456,29 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
 
         fun getImage(url: URL): Bitmap? {
+
+            /**
+             * This section is all dedicated to getting the image
+             * by using the url and using connection to set up the HttpURLConnection
+             */
+
             var connection: HttpURLConnection? = null
             try {
                 connection = url.openConnection() as HttpURLConnection
                 connection.connect()
                 val responseCode = connection.responseCode
+                /**
+                 * @return if the responseCode is equal to 200,
+                 * bitmapFactory is then used for decodeStream
+                 */
                 return if (responseCode == 200) {
                     BitmapFactory.decodeStream(connection.inputStream)
                 } else
                     null
             } catch (e: Exception) {
+                /**
+                 * @return null is returned in the catch
+                 */
                 return null
             } finally {
                 connection?.disconnect()
@@ -366,9 +488,16 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         fun getImage(urlString: String): Bitmap? {
             try {
                 val url = URL(urlString)
+                /**
+                 * @param urlString
+                 * @return url in getImage is returned here
+                 */
                 return getImage(url)
             } catch (e: MalformedURLException) {
                 return null
+                /**
+                 * @return null is returned in the catch
+                 */
             }
 
         }

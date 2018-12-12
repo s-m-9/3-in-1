@@ -6,6 +6,12 @@ import android.support.v7.app.AppCompatActivity
 
 class MovieStatsActivity : AppCompatActivity() {
 
+
+    /**
+     * @param savedInstanceState
+     * In the onCreate function, we are making the
+     * fragmentTransaction
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_stats)
@@ -14,7 +20,7 @@ class MovieStatsActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         val fragment = movieStatsFragment()
-        fragmentTransaction.add(R.id.statsFragment, fragment)
+        fragmentTransaction.add(R.id.movie_StatsFragment, fragment)
         fragmentTransaction.commit()
     }
 }

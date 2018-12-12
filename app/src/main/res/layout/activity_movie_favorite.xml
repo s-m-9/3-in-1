@@ -18,15 +18,15 @@
     <!--/>-->
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/statsBtn"
-            android:text="Statistics"
+            android:id="@+id/MovieStatsBtn"
+            android:text="@string/movie_statsBtn"
 
             android:background="@color/lightred" android:textColor="@android:color/white"/>
 
     <ListView android:id="@+id/MovieFavView"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_below="@+id/statsBtn"
+              android:layout_below="@+id/MovieStatsBtn"
     >
 
 

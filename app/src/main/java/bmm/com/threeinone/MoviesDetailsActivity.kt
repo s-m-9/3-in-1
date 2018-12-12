@@ -50,7 +50,7 @@ class MoviesDetailsActivity: AppCompatActivity() {
         db = dbHelper.writableDatabase //open your database
 
 
-        var addBtn = findViewById<Button>(R.id.addBtn)
+        var addBtn = findViewById<Button>(R.id.movieAddBtn)
 
         addBtn.setOnClickListener{
             var builder = AlertDialog.Builder(this)
@@ -58,7 +58,7 @@ class MoviesDetailsActivity: AppCompatActivity() {
 
             builder.setPositiveButton("OK", {dialog, id ->
 
-//                    val selectedMovie = listArray[position]
+
 
                 val newRow = ContentValues()
                 newRow.put(KEY_TITLE, title)
@@ -97,6 +97,18 @@ class MoviesDetailsActivity: AppCompatActivity() {
     var runtime : String? = null
     var year : String? = null
 
+
+
+
+    /**
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     * In the onActivityResult function, we are taking the data
+     * passed from the list activity and displaying it
+     * in the details activity
+     */
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -107,7 +119,6 @@ class MoviesDetailsActivity: AppCompatActivity() {
         val ratingView = findViewById<TextView>(R.id.movieRating)
         val runtimeView = findViewById<TextView>(R.id.movieRuntime)
         val actorsView = findViewById<TextView>(R.id.movieActors)
-
 
 
         title = data?.getStringExtra("title")
@@ -125,12 +136,12 @@ class MoviesDetailsActivity: AppCompatActivity() {
 
 
         titleView.setText(title)
-        yearView.setText(year)
+        yearView.setText("Year: " + year)
         posterView.setImageBitmap(bmp)
-        descView.setText(desc)
-        ratingView.setText(rating)
-        runtimeView.setText(runtime)
-        actorsView.setText(actors)
+        descView.setText("Plot: " + desc)
+        ratingView.setText("Rating: " + rating)
+        runtimeView.setText("Runtime: " + runtime)
+        actorsView.setText("Actors: " + actors)
 
     }
 

@@ -15,27 +15,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="re"
-                android:id="@+id/avgRunTime"
+                android:textAlignment="center"
+                android:id="@+id/movie_avgRunTime"
         />
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/hello_blank_fragment"
-                android:id="@+id/avgYear"
-        />
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/hello_blank_fragment"
-                android:id="@+id/minRunTime"
+                android:textAlignment="center"
+                android:id="@+id/movie_avgYear"
         />
 
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/hello_blank_fragment"
-                android:id="@+id/maxRunTime"
+                android:textAlignment="center"
+                android:id="@+id/movie_minRunTime"
+        />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/hello_blank_fragment"
+                android:textAlignment="center"
+                android:id="@+id/movie_maxRunTime"
         />
     </LinearLayout>
 

@@ -35,6 +35,16 @@
     <string name="add_btn">Add To Favorites</string>
 
     <string name="bus_activity_name">The Bus Schedule</string>
+    <string name="movie_delete">DELETE</string>
+    <string name="movie_search">Search</string>
+    <string name="movie_favoritesBtn">Favorites</string>
+    <string name="movie_statsBtn">Statistics</string>
+    <string name="movie_error">Not Found</string>
+
+    <string name="toolbar_choose">Choose An Activity</string>
+
+
+
     <string name="bus_destination">Bus Destination</string>
     <string name="bus_latitude">Bus Latitude</string>
     <string name="bus_longitude">Bus Longitude</string>
