@@ -67,7 +67,7 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_search)
 
-        var toolbar = findViewById<Toolbar>(R.id.BusToolbar) //import android.support.v7.widget.Toolbar
+        var toolbar = findViewById<Toolbar>(R.id.TheToolbar) //import android.support.v7.widget.Toolbar
         toolbar.setTitle(R.string.bus_activity_name)
         setSupportActionBar(toolbar) // show toolbar
 

@@ -10,7 +10,11 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
+import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
@@ -29,7 +33,7 @@ import java.util.logging.Level
 import kotlin.concurrent.fixedRateTimer
 
 
-class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInteractionListener{
+class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -67,6 +71,18 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_list)
+
+        var toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.TheToolbar) //import android.support.v7.widget.Toolbar
+        toolbar.setTitle(R.string.food_activity_name)
+        setSupportActionBar(toolbar) // show toolbar
+
+        //add navigation to toolbar
+        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
+        var toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close)
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
+        var navView = findViewById<NavigationView>(R.id.bus_navigation_view)
+        navView.setNavigationItemSelectedListener(this)
 
         //var toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.toolbar)
 
@@ -269,6 +285,35 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
 
             }
         }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.movie_item -> {
+                var resultIntent = Intent(this, MovieListActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+            R.id.food_item -> {
+                var resultIntent = Intent(this, FoodListActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+            R.id.news_item -> {
+                var resultIntent = Intent(this, NewsListActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+            R.id.bus_item -> {
+                var resultIntent = Intent(this, BusSearchActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+        }
+
+        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
+        drawer.closeDrawer(GravityCompat.START)
+        return true
     }
 
 }

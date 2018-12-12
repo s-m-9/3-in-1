@@ -17,12 +17,14 @@
 
     <string name="news_txt_list">News</string>
 
+    <string name="news_activity_name">News Reader</string>
     <string name="news_search_bar">Search</string>
     <string name="news_btn_search">Search</string>
     <string name="news_btn_bookmark">Add to Favourites</string>
     <string name="news_hint_search">search</string>
     <string name="news_title">News</string>
 
+    <string name="movie_activity_name">Movie Database</string>
     <string name="movie_title">Title</string>
     <string name="movie_year">Year</string>
     <string name="movie_rating">Rating</string>
@@ -41,6 +43,9 @@
     <string name="adjusted_schedule_time">Bus Adjusted Schedule Time</string>
     <string name="bus_add_to_favourites_button">Add To Favourites</string>
     <string name="bus_stop_not_found">Bus Stop Not Found</string>
+
+
+    <string name="food_activity_name">Nutrition Database</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>

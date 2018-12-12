@@ -69,6 +69,7 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
         var toolbar = findViewById<Toolbar>(R.id.movieListToolbar)
+        toolbar.setTitle(R.string.movie_activity_name)
         setSupportActionBar(toolbar)
 
 
@@ -87,7 +88,7 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         progressBar = findViewById<ProgressBar>(R.id.progressBar)
         error = findViewById(R.id.error)
-error.visibility = View.INVISIBLE
+        error.visibility = View.INVISIBLE
         searchBtn = findViewById<Button>(R.id.searchBtn)
         var favBtn = findViewById<Button>(R.id.favBtn)
 
@@ -184,7 +185,7 @@ error.visibility = View.INVISIBLE
                 startActivity(navIntent)
             }
             R.id.bus_item -> {
-                val navIntent = Intent(this, BusListActivity::class.java)
+                val navIntent = Intent(this, BusSearchActivity::class.java)
                 startActivity(navIntent)
             }
         }
