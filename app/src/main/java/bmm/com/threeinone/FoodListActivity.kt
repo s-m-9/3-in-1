@@ -37,7 +37,7 @@ import android.support.design.widget.Snackbar
 import android.view.View
 
 
-class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -234,34 +234,34 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.movie_item -> {
-                var resultIntent = Intent(this, MovieListActivity::class.java) // <-- change
-                startActivity(resultIntent)
-                finish()
-            }
-            R.id.food_item -> {
-                var resultIntent = Intent(this, FoodListActivity::class.java) // <-- change
-                startActivity(resultIntent)
-                finish()
-            }
-            R.id.news_item -> {
-                var resultIntent = Intent(this, NewsListActivity::class.java) // <-- change
-                startActivity(resultIntent)
-                finish()
-            }
-            R.id.bus_item -> {
-                var resultIntent = Intent(this, BusSearchActivity::class.java) // <-- change
-                startActivity(resultIntent)
-                finish()
-            }
-        }
-
-        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
-        drawer.closeDrawer(GravityCompat.START)
-        return true
-    }
+//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId) {
+//            R.id.movie_item -> {
+//                var resultIntent = Intent(this, MovieListActivity::class.java) // <-- change
+//                startActivity(resultIntent)
+//                finish()
+//            }
+//            R.id.food_item -> {
+//                var resultIntent = Intent(this, FoodListActivity::class.java) // <-- change
+//                startActivity(resultIntent)
+//                finish()
+//            }
+//            R.id.news_item -> {
+//                var resultIntent = Intent(this, NewsListActivity::class.java) // <-- change
+//                startActivity(resultIntent)
+//                finish()
+//            }
+//            R.id.bus_item -> {
+//                var resultIntent = Intent(this, BusSearchActivity::class.java) // <-- change
+//                startActivity(resultIntent)
+//                finish()
+//            }
+//        }
+//
+//        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
+//        drawer.closeDrawer(GravityCompat.START)
+//        return true
+//    }
 
     fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
