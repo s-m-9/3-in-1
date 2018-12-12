@@ -2,6 +2,7 @@ package bmm.com.threeinone
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -10,11 +11,16 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
+import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -27,13 +33,14 @@ import java.io.Reader
 import java.lang.ArithmeticException
 import java.util.logging.Level
 import kotlin.concurrent.fixedRateTimer
+import android.support.design.widget.Snackbar
+import android.view.View
 
 
-class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInteractionListener{
+class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
     var foodNameArray : ArrayList<String> = ArrayList<String>()
     var foodFatArray: ArrayList<String> = ArrayList<String>()
     var foodCalorieArray: ArrayList<String> = ArrayList<String>()
@@ -41,9 +48,6 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
     lateinit var addFavs: Button
     lateinit var pressSearch : Button
     lateinit var inputText : EditText
-//    lateinit var foodName: TextView
-//    lateinit var foodFat: TextView
-//    lateinit var foodCalories: TextView
     lateinit var name : String
     lateinit var fat : String
     lateinit var calories: String
@@ -52,8 +56,6 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
     lateinit var db: SQLiteDatabase
     lateinit var newFragment:SearchFragment
     lateinit var query: String
-
-
     /**
         * adds items to the food array
         * finds the pressSearch button and adds a listener to it
@@ -63,59 +65,25 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
         * @param savedInstanceState
         *
         */
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_list)
-
-        //var toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.toolbar)
-
+        var progressBar : ProgressBar = findViewById(R.id.progressBar)
         pressSearch = findViewById<Button>(R.id.pressSearch)
         inputText = findViewById(R.id.typeSearch)
-
         pressSearch.setOnClickListener{
+
             if (inputText.text.isEmpty()){
                 Toast.makeText(this, "Search field must not be empty", Toast.LENGTH_LONG).show()
             }else{
+                hideKeyboard()
                 FoodQuery().execute(inputText.text.toString())
                 inputText.setText("")
-
-                var infoToPass = Bundle()
-
-                try {
-
-                    Handler().postDelayed({
-                        infoToPass.putString("Name",name)
-                        infoToPass.putString("Fat",fat)
-                        infoToPass.putString("Calories", calories)
-
-                        newFragment = SearchFragment()
-                        newFragment.arguments = infoToPass
-                        supportFragmentManager.beginTransaction().replace(R.id.foodListContainer,newFragment ).commit();
-
-                    }, 2000)
-
-                }catch (e: ArithmeticException){
-
-                    Log.i("Error","an exception was thrown");
-                }
             }
         }
 
         addFavs = findViewById<Button>(R.id.favourites)
-
-        //foodlistAdapter = FoodListAdapter(this)
-
-        //FoodView?.setAdapter(foodlistAdapter)
-//
-//        foodName = findViewById(R.id.foodName)
-//        foodFat = findViewById(R.id.foodFat)
-//        foodCalories = findViewById(R.id.foodCalories)
-
         addFavs?.setOnClickListener {
-
-
-
             dbHelper = FoodDatabaseHelper() //get a helper object
             db = dbHelper.writableDatabase//open your database
             results = db.query(TABLE_NAME, arrayOf("_id", dbHelper.KEY_FOOD), null, null, null, null, null, null )
@@ -128,44 +96,19 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             results = db.query(TABLE_NAME, arrayOf( dbHelper.KEY_FOOD, dbHelper.KEY_ID, dbHelper.KEY_FAT, dbHelper.KEY_CALORIES),
                 null, null, null, null,null,null
             )
-
             Toast.makeText(this, name + " added to favourites", Toast.LENGTH_SHORT).show()
-
             Handler().postDelayed({
                 supportFragmentManager.beginTransaction().remove(newFragment).commit();
-<<<<<<< HEAD
-<<<<<<< HEAD
             }, 500)
-=======
-            }, 600)
-
-
->>>>>>> parent of 292ed87... adding changes
-=======
-            }, 600)
->>>>>>> parent of b2ee3f0... minor changes
             val intent = Intent(this, FoodDetailsActivity::class.java)
-
-
             startActivityForResult(intent, 50)
-
         }
-
-//        FoodView?.setOnItemClickListener{_, _, position, _ ->
-//            val selectedFood = foodNameArray[position]
-//            val foodDetailIntent = Intent(this, FoodDetailsActivity::class.java)
-//
-//            startActivity(foodDetailIntent)
-//        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
-
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -195,7 +138,20 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
 
 
     inner class FoodQuery : AsyncTask<String, Integer, String>(){
+
+        var progressBar : ProgressBar = findViewById(R.id.progressBar)
+        var progressStarted = 10
+        var progressFinished = 100
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+            progressBar.visibility = View.VISIBLE
+            progressBar.progress = progressStarted
+
+        }
+
         override fun doInBackground(vararg params: String?): String {
+            progressBar.progress = 60
             query = URLEncoder.encode(params[0], "UTF-8")
             var url = URL("https://api.edamam.com/api/food-database/parser?app_id=a79e98d4&app_key=1ae7a8747a7c27ea98a0124a85d9cc91&ingr=$query")
             val Connection = url.openConnection() as HttpURLConnection
@@ -213,33 +169,36 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             var foodObject = array.getJSONObject(0)
             var food = foodObject.getJSONObject("food")
             var nutrients = food.getJSONObject("nutrients")
-            fat = nutrients.getDouble("FAT").toString()
+            fat= nutrients.getDouble("FAT").toString()
             calories = nutrients.getDouble("ENERC_KCAL").toString()
             name = root.getString("text")
             publishProgress()
-            return result
+                return result
         }
 
-        override fun onProgressUpdate(vararg values: Integer?) {
-            super.onProgressUpdate(*values)
-//            foodName.setText("Name: " + name)
-//            foodFat.setText("Fat: " + fat)
-//            foodCalories.setText("Calories: " + calories)
 
-
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            progressBar.progress = progressFinished
+            Handler().postDelayed({
+                progressBar.visibility = View.INVISIBLE
+            }, 300)
             foodNameArray.add(name)
             foodFatArray.add(fat)
             foodCalorieArray.add(calories)
-
-
+            var infoToPass = Bundle()
+            infoToPass.putString("Name",name)
+            infoToPass.putString("Fat",fat)
+            infoToPass.putString("Calories", calories)
+            newFragment = SearchFragment()
+            newFragment.arguments = infoToPass
+            supportFragmentManager.beginTransaction().replace(R.id.foodListContainer,newFragment ).commit();
         }
-
     }
 
     val DATABASE_NAME = "Food.db"
     val VERSION_NUM = 1
     val TABLE_NAME = "Food"
-
 
     inner class FoodDatabaseHelper : SQLiteOpenHelper(this@FoodListActivity, DATABASE_NAME, null, VERSION_NUM){
         val KEY_FOOD = "Food"
@@ -261,22 +220,52 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 50) {
             if (resultCode == RESULT_OK) {
-
-
                val returnedName = data!!.getStringExtra("Name")
                 val returnedCalories =  data!!.getStringExtra("Calories")
                 val returnedFat =  data!!.getStringExtra("Fat")
                 var infoToPass = Bundle()
-
-                      infoToPass.putString("Name", returnedName)
-                      infoToPass.putString("Calories", returnedCalories)
-                      infoToPass.putString("Fat", returnedFat)
+                infoToPass.putString("Name", returnedName)
+                infoToPass.putString("Calories", returnedCalories)
+                infoToPass.putString("Fat", returnedFat)
                 var newFragment = SearchFragment()
                 newFragment.arguments = infoToPass
                 supportFragmentManager.beginTransaction().replace(R.id.foodListContainer, newFragment).commit();
-
             }
         }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.movie_item -> {
+                var resultIntent = Intent(this, MovieListActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+            R.id.food_item -> {
+                var resultIntent = Intent(this, FoodListActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+            R.id.news_item -> {
+                var resultIntent = Intent(this, NewsListActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+            R.id.bus_item -> {
+                var resultIntent = Intent(this, BusSearchActivity::class.java) // <-- change
+                startActivity(resultIntent)
+                finish()
+            }
+        }
+
+        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
+        drawer.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    fun hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
 }
