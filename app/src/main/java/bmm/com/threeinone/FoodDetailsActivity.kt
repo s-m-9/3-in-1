@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.*
@@ -168,13 +169,10 @@ class FoodDetailsActivity : AppCompatActivity(), SearchFragment.OnFragmentIntera
                 //val idIndex = results.getColumnIndex("_id") //find the index of _id column
                     deleteFood(getItemId(position))
 
+                Snackbar.make(deleteButton,"Item successfully deleted!",  Snackbar.LENGTH_SHORT)
+                    .show()
+
             }
-//
-//            if(position %2 ==0)
-//                result = inflater.inflate(R.layout.chat_row_outgoing, null)
-//            else
-//                result = inflater.inflate(R.layout.chat_row_incoming, null)
-//
             val foodName = result?.findViewById(R.id.food_item_name) as TextView
             foodName.text = "Name: " + getName(position) // get the string at position
 
@@ -183,7 +181,6 @@ class FoodDetailsActivity : AppCompatActivity(), SearchFragment.OnFragmentIntera
 
             val foodFat = result?.findViewById(R.id.food_item_fat) as TextView
             foodFat.text = "Fat: " + getFat(position) // get the string at position
-
 
             return result
         }
