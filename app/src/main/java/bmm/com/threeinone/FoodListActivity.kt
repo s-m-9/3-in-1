@@ -91,7 +91,7 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             Toast.makeText(this, name + " added to favourites", Toast.LENGTH_SHORT).show()
             Handler().postDelayed({
                 supportFragmentManager.beginTransaction().remove(newFragment).commit();
-            }, 600)
+            }, 500)
             val intent = Intent(this, FoodDetailsActivity::class.java)
             startActivityForResult(intent, 50)
         }
