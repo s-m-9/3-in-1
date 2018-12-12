@@ -82,6 +82,9 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             }
         }
 
+
+        var goToFavs = findViewById<Button>(R.id.goToFavs)
+
         addFavs = findViewById<Button>(R.id.favourites)
         addFavs?.setOnClickListener {
             dbHelper = FoodDatabaseHelper() //get a helper object
@@ -100,6 +103,11 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             Handler().postDelayed({
                 supportFragmentManager.beginTransaction().remove(newFragment).commit();
             }, 500)
+            val intent = Intent(this, FoodDetailsActivity::class.java)
+            startActivityForResult(intent, 50)
+        }
+
+        goToFavs.setOnClickListener {
             val intent = Intent(this, FoodDetailsActivity::class.java)
             startActivityForResult(intent, 50)
         }
