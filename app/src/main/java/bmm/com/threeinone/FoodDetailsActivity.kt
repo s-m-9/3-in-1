@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.*
@@ -164,9 +166,25 @@ class FoodDetailsActivity : AppCompatActivity(), SearchFragment.OnFragmentIntera
             val deleteButton = result.findViewById<Button>(R.id.delete_button)
 
             deleteButton.setOnClickListener {
-                results = db.query(TABLE_NAME, arrayOf("_id", dbHelper.KEY_FOOD, dbHelper.KEY_CALORIES, dbHelper.KEY_FAT), null, null, null, null, null, null )
-                //val idIndex = results.getColumnIndex("_id") //find the index of _id column
+
+                var builder = AlertDialog.Builder(this@FoodDetailsActivity);
+                builder.setTitle("Are you sure you want to delete?")
+
+                builder.setPositiveButton("Ok") { _, _ ->
+                    results = db.query(TABLE_NAME, arrayOf("_id", dbHelper.KEY_FOOD, dbHelper.KEY_CALORIES, dbHelper.KEY_FAT), null, null, null, null, null, null )
+                    //val idIndex = results.getColumnIndex("_id") //find the index of _id column
                     deleteFood(getItemId(position))
+                    Snackbar.make(deleteButton,"Item successfully deleted!",  Snackbar.LENGTH_SHORT)
+                        .show()
+
+//                    finish()
+                }
+                builder.setNegativeButton("Cancel") { _, _ ->
+                    // User cancelled the dialog
+                }
+
+                var dialog = builder.create()
+                dialog.show();
 
             }
 //

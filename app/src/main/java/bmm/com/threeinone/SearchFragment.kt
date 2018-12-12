@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import org.w3c.dom.Text
 
@@ -67,6 +68,7 @@ class SearchFragment : Fragment() {
         if (infoToPass != null) {
             calorie.text = "Calories: " + infoToPass.getString("Calories")
         }
+
 
         // Inflate the layout for this fragment
         return view
