@@ -108,7 +108,7 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             error.visibility = View.INVISIBLE
 
-            Toast.makeText(this, "Getting Results", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.gettingResults, Toast.LENGTH_SHORT).show()
 
             var edit = findViewById<EditText>(R.id.searchBar)
             var myQuery = MovieListQuery()

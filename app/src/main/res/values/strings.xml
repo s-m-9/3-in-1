@@ -43,7 +43,13 @@
     <string name="adjusted_schedule_time">Bus Adjusted Schedule Time</string>
     <string name="bus_add_to_favourites_button">Add To Favourites</string>
     <string name="bus_stop_not_found">Bus Stop Not Found</string>
+    <string name="gettingResults">Getting Results</string>
+    <string name="DeletedFromBusFavourites">Deleted From Favourites</string>
+    <string name="DeleteAreYouSure">Are you sure you want to delete this from favorites?</string>
 
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
     <string name="food_activity_name">Nutrition Database</string>
 

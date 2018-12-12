@@ -184,16 +184,16 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             bus_stop_delete.setOnClickListener {
                 var builder = android.app.AlertDialog.Builder(this@BusSearchActivity)
-                builder.setTitle("Are you sure you want to delete this from favorites?")
+                builder.setTitle(R.string.DeleteAreYouSure)
 
-                builder.setPositiveButton("OK", {dialog, id ->
+                builder.setPositiveButton(R.string.ok, {dialog, id ->
 //                var s = results.getCount()
                     val stop_id = savedIDArray.get(position)
                     Log.i("Item", "Item Number $stop_id")
                     deleteStop(stop_id.toLong(), position)
-                    Snackbar.make(bus_stop_delete, "Deleted From Favorites", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(bus_stop_delete, R.string.DeletedFromBusFavourites, Snackbar.LENGTH_LONG).show();
                 })
-                builder.setNegativeButton("Cancel", {dialog, id ->
+                builder.setNegativeButton(R.string.cancel, {dialog, id ->
 
                 })
 
