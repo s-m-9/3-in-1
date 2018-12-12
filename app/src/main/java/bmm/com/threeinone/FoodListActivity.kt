@@ -134,12 +134,16 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
             Handler().postDelayed({
                 supportFragmentManager.beginTransaction().remove(newFragment).commit();
 <<<<<<< HEAD
+<<<<<<< HEAD
             }, 500)
 =======
             }, 600)
 
 
 >>>>>>> parent of 292ed87... adding changes
+=======
+            }, 600)
+>>>>>>> parent of b2ee3f0... minor changes
             val intent = Intent(this, FoodDetailsActivity::class.java)
 
 
