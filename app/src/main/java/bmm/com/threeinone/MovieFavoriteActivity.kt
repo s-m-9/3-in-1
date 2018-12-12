@@ -43,7 +43,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
 
         var statsBtn = findViewById<Button>(R.id.MovieStatsBtn)
         favView = findViewById<ListView>(R.id.MovieFavView)
-//
+
         statsBtn.setOnClickListener {
             startActivity(Intent(this, MovieStatsActivity::class.java))
         }
@@ -91,26 +91,47 @@ class MovieFavoriteActivity : AppCompatActivity() {
     }
 
     inner class MovieFavListAdapter(ctx : Context): ArrayAdapter<FavoriteMovies>(ctx, 0){
+
+
+
+
+
+        /**
+         * @return the size of the array is returned here in the
+         * getCount function
+         */
         override fun getCount() : Int{
-
-
-            /**
-             * @return the size of the array is returned here
-             */
-
 
             return favListArray.size
         }
 
+
+
+
+
+        /**
+         * @return the position of the favlistarray is returned here in
+         * the getItem function
+         */
         override fun getItem(position : Int) : FavoriteMovies {
-
-            /**
-             * @return the position of the favlistarray is returned
-             */
-
 
             return favListArray.get(position)
         }
+
+
+
+
+
+
+
+
+        /**
+         * @param position
+         * @param convertView
+         * @param parent
+         * @return the result is returned here in the getView
+         * function
+         */
         override fun getView(position : Int, convertView: View?, parent : ViewGroup) : View? {
             var inflater = LayoutInflater.from(parent.getContext())
 
@@ -133,20 +154,26 @@ class MovieFavoriteActivity : AppCompatActivity() {
             movie_desc.setText(getItem(position).favDesc)
 
 
-            /**
-             * @return the result is returned here
-             */
+
 
             return result
         }
 
+
+
+
+
+
+        /**
+         * @param position
+         * @return the id is returned here in
+         * the getItemId function and sent to
+         * long format
+         */
+
         override fun getItemId(position : Int):Long{
             val something = 3
 
-            /**
-             * @param position
-             * @return the id is returned here and sent to long format
-             */
 
             return something.toLong()
         }

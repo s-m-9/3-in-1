@@ -98,6 +98,18 @@ class MoviesDetailsActivity: AppCompatActivity() {
     var runtime : String? = null
     var year : String? = null
 
+
+
+
+    /**
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     * In the onActivityResult function, we are taking the data
+     * passed from the list activity and displaying it
+     * in the details activity
+     */
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -109,11 +121,6 @@ class MoviesDetailsActivity: AppCompatActivity() {
         val runtimeView = findViewById<TextView>(R.id.movieRuntime)
         val actorsView = findViewById<TextView>(R.id.movieActors)
 
-        /**
-         * @param requestCode
-         * @param resultCode
-         * @param data
-         */
 
         title = data?.getStringExtra("title")
         year = data?.getStringExtra("year")

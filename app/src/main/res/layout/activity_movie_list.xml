@@ -28,6 +28,9 @@
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/movieListToolbar">
 
+
+
+
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
     android:hint="@string/movie_search"
@@ -54,6 +57,8 @@
 
             android:background="@color/lightred" android:textColor="@android:color/white"/>
 
+
+
     <ProgressBar android:layout_width="match_parent"
                  android:layout_height="wrap_content"
     android:layout_below="@+id/MovieFavBtn"
@@ -69,11 +74,12 @@
 
     </ListView>
     <TextView
-            android:text="Not Found"
+            android:text="@string/movie_error"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content" android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true" android:id="@+id/movieError"
-            android:layout_marginTop="58dp"
+            android:layout_marginTop="108dp"
 
     />
 </RelativeLayout>

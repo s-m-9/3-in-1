@@ -8,7 +8,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.design.widget.NavigationView
 import android.support.v4.app.NotificationCompat
 import android.support.v4.view.GravityCompat
@@ -81,10 +83,13 @@ class MovieListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var progressBar: ProgressBar
     lateinit var searchBtn : Button
    lateinit var error : TextView
-    /**
-     *
-     */
 
+    /**
+     * @param savedInstanceState
+     * In the onCreate function we are making things such as the
+     * favBtn, searchBtn, etc functional
+     */
+    @RequiresApi(Build.VERSION_CODES.CUPCAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
@@ -175,10 +180,11 @@ error.visibility = View.INVISIBLE
     }
 
 
-
-
-
-
+    /**
+     * @param menu
+     * @return in the onCreateOptionsMenu function, we are
+     * going to return true
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         return true
@@ -190,7 +196,11 @@ error.visibility = View.INVISIBLE
 
 
 
-
+    /**
+     * @param item
+     * @return this is where one of our 4 activities gets called and opened from the toolbar.
+     * onNavigationItemSelected function is based solely on this and closing the drawer.
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -217,10 +227,7 @@ error.visibility = View.INVISIBLE
 
         return true
 
-        /**
-         * @param item
-         * @return this is where one of our 4 activities gets called and opened from the toolbar
-         */
+
 
 
     }
@@ -240,21 +247,42 @@ error.visibility = View.INVISIBLE
 
 
     inner class MovieListAdapter(ctx : Context): ArrayAdapter<MovieListItem>(ctx, 0){
+
+
+        /**
+         * @return the size of the list array gets returned here in the getCount function
+         */
         override fun getCount() : Int{
-            /**
-             * @return the size of the list array gets returned here
-             */
+
             return listArray.size
         }
 
+
+
+
+
+
+        /**
+         * @param position
+         * @return the item's position gets returned here in the getItem function
+         *
+         */
         override fun getItem(position : Int) : MovieListItem {
-            /**
-             * @param position
-             * @return the item's position gets returned here
-             *
-             */
+
             return listArray.get(position)
         }
+
+
+
+
+
+        /**
+         * @param position
+         * @param convertView
+         * @param parent
+         * @return the view gets inflated with result here in the getView function and
+         * the movie title, poster and year are displayed on the view
+         */
         override fun getView(position : Int, convertView: View?, parent : ViewGroup) : View? {
             var inflater = LayoutInflater.from(parent.getContext())
 
@@ -269,24 +297,22 @@ error.visibility = View.INVISIBLE
            movie_poster.setImageBitmap(getItem(position).moviePoster)
             movie_year.setText(getItem(position).movieYear)
 
-            /**
-             * @param position
-             * @param convertView
-             * @param parent
-             * @return the view gets inflated with result here and
-             * the movie title, poster and year are displayed on the view
-             */
+
 
             return result
         }
 
+
+
+
+        /**
+         * @param position
+         * @return the item Id is returned here in the getItemId function
+         */
         override fun getItemId(position : Int):Long{
             val something = 3
 
-            /**
-             * @param position
-             * @return the item Id is returned here
-             */
+
             return something.toLong()
         }
     }

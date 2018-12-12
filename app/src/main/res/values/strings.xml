@@ -33,7 +33,7 @@
     <string name="movie_search">Search</string>
     <string name="movie_favoritesBtn">Favorites</string>
     <string name="movie_statsBtn">Statistics</string>
-
+    <string name="movie_error">Not Found</string>
 
     <string name="toolbar_choose">Choose An Activity</string>
 

@@ -35,6 +35,15 @@ class movieStatsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+
+    /**
+     * @param container
+     * @param inflater
+     * @param savedInstanceState
+     * @return the inflated view is returned at the end here in
+     * the onCreateView function
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,10 +86,7 @@ var avgSum = 0
             yearSum = yearSum + year
             count++
 
-            /**
-             * @param container
-             * @param inflater
-             */
+
 
             results.moveToNext()
         }
@@ -98,13 +104,6 @@ var avgSum = 0
         minRunTimeView.text = "Min Runtime: " + minRunTime.toString()
 
 
-        /**
-         * @param container
-         * @param inflater
-         * @param savedInstanceState
-         * @return the inflated view is returned at the end here
-         *
-         */
 
         return view
     }
