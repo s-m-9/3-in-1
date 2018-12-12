@@ -24,4 +24,7 @@
     <color name="colorDarkLateGrey">#2F4F4F</color>
     <color name="white">#ffffff</color>
     <color name="purple">#3949AB</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000</color>
+    <color name="lightred">#ed2939</color>
 </resources>

@@ -24,6 +24,7 @@
     <string name="news_title">News</string>
 
     <string name="movie_title">Title</string>
+    <string name="movie_year">Year</string>
     <string name="movie_rating">Rating</string>
     <string name="movie_runtime">Runtime</string>
     <string name="movie_actors">Actors</string>
