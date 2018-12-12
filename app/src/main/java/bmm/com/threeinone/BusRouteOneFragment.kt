@@ -49,7 +49,8 @@ class BusRouteOneFragment : Fragment() {
         val dataPassed = arguments
         tripArray = dataPassed!!.getParcelableArrayList<Trip>("tripList")
         var average = dataPassed!!.getFloat("average").toString()
-        averageText.text = "${R.string.adjSchedLabel}: $average"
+        var str = getString(R.string.adjSchedLabel)
+        averageText.text = "$str: $average"
 
         if (tripArray.isEmpty()) {
             noBusses.visibility = View.VISIBLE

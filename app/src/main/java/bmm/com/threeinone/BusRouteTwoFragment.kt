@@ -45,7 +45,8 @@ class BusRouteTwoFragment : Fragment() {
         }
 
         var average = dataPassed!!.getFloat("average").toString()
-        averageText.text = "${R.string.adjSchedLabel}: $average"
+        var str = getString(R.string.adjSchedLabel)
+        averageText.text = "$str: $average"
 
         var trip_view = screen.findViewById<RecyclerView>(R.id.BusRoute2CardListView)
         tripAdapter = TripAdapter(tripArray, activity!!.applicationContext)

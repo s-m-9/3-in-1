@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Three-In-One</string>
+    <string name="news_reader_app_name">News Reader</string>
+    <string name="movies_app_name">Movies</string>
+    <string name="bus_app_name">Bus Route App</string>
+
+
+
+    <string name="news_txt1">News Details 1</string>
+    <string name="news_txt2">News Details 2</string>
+    <string name="news_txt3">News Details 3</string>
+    <string name="news_txt4">News Details 4</string>
+    <string name="news_txt5">News Details 5</string>
+    <string name="news_txt6">News Details 6</string>
+    <string name="news_txt7">News Details 7</string>
+    <string name="news_btn_save">Save</string>
+
+    <string name="news_txt_list">News</string>
+
+    <string name="news_activity_name">News Reader</string>
+    <string name="news_search_bar">Search</string>
+    <string name="news_btn_search">Search</string>
+    <string name="news_btn_bookmark">Add to Favourites</string>
+    <string name="news_hint_search">search</string>
+    <string name="news_title">News</string>
+
+    <string name="movie_activity_name">Base de donnees de film</string>
+    <string name="movie_title">Titre</string>
+    <string name="movie_year">anee</string>
+    <string name="movie_rating">evaluation</string>
+    <string name="movie_runtime">Runtime</string>
+    <string name="movie_actors">acteurs</string>
+    <string name="movie_plot">las intrigue</string>
+    <string name="movie_poster_url">URL</string>
+    <string name="add_btn">Ajouter aux Favoris</string>
+
+    <string name="bus_activity_name">L\'horaire des bus</string>
+    <string name="movie_delete">EFFACER</string>
+    <string name="movie_search">Chercher</string>
+    <string name="movie_favoritesBtn">Favoris</string>
+    <string name="movie_statsBtn">Statistiques</string>
+    <string name="movie_error">Pas trouve</string>
+
+    <string name="toolbar_choose">Choisir une activite</string>
+
+
+
+    <string name="bus_destination">Destination de Bus</string>
+    <string name="bus_latitude">Latitude de bus</string>
+    <string name="bus_longitude">Longitude du bus</string>
+    <string name="bus_gps_speed">Vitesse de Bus gps</string>
+    <string name="bus_start_time">Heure de depart du Bus</string>
+    <string name="adjusted_schedule_time">Temps de bus ajuste</string>
+    <string name="bus_add_to_favourites_button">Ajouter aux Favoris</string>
+    <string name="bus_stop_not_found">arret de bus introuvable</string>
+    <string name="gettingResults">Obtenir des resultats</string>
+    <string name="DeletedFromBusFavourites">Supprime des Favoris</string>
+    <string name="DeleteAreYouSure">Etes-vous sur de couloir supprimer ceci des favoris?</string>
+    <string name="SearchHint">Chercher</string>
+    <string name="AdjTime">temps ajuste</string>
+    <string name="GPSPos">Position GPS</string>
+    <string name="Speed">La vitesse</string>
+    <string name="StartTime">Heure de debut</string>
+    <string name="noBussesAvailable">Pas de bus disponible</string>
+    <string name="adjSchedLabel">Temps de travail moyen ajuste</string>
+
+
+
+    <string name="ok">D\'accord</string>
+    <string name="cancel">Annuler</string>
+
+    <string name="food_activity_name">Nutrition Database</string>
+
+    <string name="open">ouvrir</string>
+    <string name="close">fermer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
