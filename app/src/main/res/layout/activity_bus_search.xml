@@ -33,14 +33,14 @@
                       android:layout_alignParentStart="true"
                       android:layout_toLeftOf="@id/BusSearchButton"
                       android:id="@+id/BusSearchBar"
-                      android:hint="Search"
+                      android:hint="@string/SearchHint"
                       android:layout_alignParentTop="true"
             />
 
             <Button android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="Search"
+                    android:text="@string/SearchHint"
                     android:id="@+id/BusSearchButton"
 
             />

@@ -281,16 +281,15 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             R.id.action_two -> {
                 var builder = AlertDialog.Builder(this);
-                builder.setTitle("Do you want to go back")
+                builder.setTitle("1.Type in a bus stop in order to search for the schedule, Press search\n" +
+                        "2. Choose a bus route that passes through the stop\n" +
+                        "3. Look through the tabs to see the bus information")
 
                 builder.setPositiveButton("OK", {dialog, id ->
                     // User clicked OK button
-                    finish()
-                })
-                builder.setNegativeButton("Cancel",  { dialog, id ->
-                    // User cancelled the dialog
 
                 })
+
 
                 var dialog = builder.create()
                 dialog.show();

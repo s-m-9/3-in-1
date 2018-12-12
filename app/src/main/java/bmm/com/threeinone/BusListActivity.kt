@@ -34,6 +34,11 @@ class BusListActivity : Activity() {
     lateinit var notFound : TextView
     var favResult : String? = null
 
+
+    /**
+     * It displays a details of the list item and shows a favorites button
+     * @param savedInstanceState saves instance state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_list)
@@ -64,6 +69,12 @@ class BusListActivity : Activity() {
         }
     }
 
+    /**
+     * It gets data from the previous activity
+     * @param requestCode
+     * @param resultCode
+     * @param data data incoming
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -95,6 +106,10 @@ class BusListActivity : Activity() {
 
         var busStop : BusStop? = null
 
+        /**
+         * Do URL in the other thread
+         */
+
         override fun doInBackground(vararg params: String?): String {
 
             val busStopUrl = URL("https://api.octranspo1.com/v1.2/GetRouteSummaryForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=$favResult")
@@ -111,6 +126,9 @@ class BusListActivity : Activity() {
             return "Done"
         }
 
+        /**
+         * Updates the GUI
+         */
         override fun onProgressUpdate(vararg values: Integer?) { // update your GUI
             if (listArray.isEmpty()) {
                 notFound.visibility = View.VISIBLE
@@ -118,6 +136,13 @@ class BusListActivity : Activity() {
             buslistAdapter.notifyDataSetChanged()
         }
 
+        /**
+         *
+         * run when thread is done and going away
+         *
+         * @param result
+         *
+         */
         override fun onPostExecute(result: String?) { // run when thread is done and going away
 //            busStopArray
             progress_bar.visibility = View.INVISIBLE
@@ -152,6 +177,13 @@ class BusListActivity : Activity() {
             }
         }
 
+        /**
+         *
+         * gets the data from the XML
+         *
+         * @param response stream from the url
+         *
+         */
         fun findBusses(response: InputStream) {
             //Initial list of bus stops
 

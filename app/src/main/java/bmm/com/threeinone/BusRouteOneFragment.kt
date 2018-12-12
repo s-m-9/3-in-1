@@ -21,7 +21,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 /**
- * A simple [Fragment] subclass.
+ * Bus view fragment
  *
  */
 class BusRouteOneFragment : Fragment() {
@@ -29,6 +29,14 @@ class BusRouteOneFragment : Fragment() {
     lateinit var tripArray : ArrayList<Trip>
     lateinit var tripAdapter : TripAdapter
 
+
+    /**
+     * Creates the view which the user interacts with
+     * @param inflater inflates the view
+     * @param container the top view
+     * @param savedInstanceState
+     *
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +49,7 @@ class BusRouteOneFragment : Fragment() {
         val dataPassed = arguments
         tripArray = dataPassed!!.getParcelableArrayList<Trip>("tripList")
         var average = dataPassed!!.getFloat("average").toString()
-        averageText.text = "Average Adjusted Schedule Time: $average"
+        averageText.text = "${R.string.adjSchedLabel}: $average"
 
         if (tripArray.isEmpty()) {
             noBusses.visibility = View.VISIBLE
@@ -59,6 +67,11 @@ class BusRouteOneFragment : Fragment() {
     }
 
     inner class TripAdapter(val items: ArrayList<Trip>, val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
+        /**
+         * gets the count of array
+         *
+         * @return count
+         */
         override fun getItemCount(): Int {
             return items.size
         }

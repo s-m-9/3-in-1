@@ -33,6 +33,17 @@ import java.net.HttpURLConnection
 import android.support.v7.app.AppCompatActivity
 import java.net.URL
 
+
+/**
+ *
+ * @param destination where the bus is going
+ * @param latitude latitude
+ * @param longitude longitiude
+ * @param speed how fast the bus is going
+ * @param startTime time the bus starts going
+ * @param adjTime adjustment between expected and real
+ * @param routeID: id for the route
+ */
 data class Trip(var destination: String?,
                 var latitude: String?,
                 var longitude: String?,
@@ -104,6 +115,12 @@ class BusDetailsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * It gets data from the previous activity
+     * @param requestCode
+     * @param resultCode
+     * @param data data incoming
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        val firstName = findViewById<TextView>(R.id.FirstNameText)
         /*
@@ -122,26 +139,14 @@ class BusDetailsActivity : AppCompatActivity() {
         var route = data?.getSerializableExtra("Bus Route 2")
         if (route != null) busRoute2 = route as BusStop
 
-//        val bus1 = data?.getSerializableExtra("Bus Route 1") as BusStop
-//        val bus2 = data?.getSerializableExtra("Bus Route 2") as BusStop
-
-//        val destination = findViewById<TextView>(R.id.destinationText)
-//        val latText = findViewById<TextView>(R.id.latText)
-//        val longText = findViewById<TextView>(R.id.longText)
-//        val gpsText = findViewById<TextView>(R.id.gpsText)
-//        val startTimeText = findViewById<TextView>(R.id.startTimeText)
-//        val scheduleText = findViewById<TextView>(R.id.scheduleText)
-
-//        destination.text = data?.getStringExtra("destination")
-//        latText.text = data?.getStringExtra("latitude")
-//        longText.text = data?.getStringExtra("longitude")
-//        gpsText.text = data?.getStringExtra("gpsText")
-//        startTimeText.text = data?.getStringExtra("startTime")
-//        scheduleText.text = data?.getStringExtra("schedule")
     }
 
     inner class TripQuery : AsyncTask<String, Integer, String>() {
         var trip : Trip? = null
+
+        /**
+         * Do URL in the other thread
+         */
 
         override fun doInBackground(vararg params: String?): String {
 
@@ -157,6 +162,9 @@ class BusDetailsActivity : AppCompatActivity() {
             return "Done"
         }
 
+        /**
+         * Updates the GUI
+         */
         override fun onProgressUpdate(vararg values: Integer?) { // update your GUI
 //            if (listArray.isEmpty()) {
 //                notFound.visibility = View.VISIBLE
@@ -165,12 +173,20 @@ class BusDetailsActivity : AppCompatActivity() {
             Log.i("Hey", tripArray.size.toString())
         }
 
+        /**
+         * run when thread is done and going away
+         */
         override fun onPostExecute(result: String?) { // run when thread is done and going away
             fragmentAdapter = PagerAdapter(supportFragmentManager)
             busViewPager.adapter = fragmentAdapter
             tabs.setupWithViewPager(busViewPager)
         }
 
+
+        /**
+         * Pulls the data from the XML online
+         * @param response stream from the URL
+         */
         fun getTrips(response: InputStream) {
             //Initial list of bus stops
 
@@ -285,11 +301,23 @@ class BusDetailsActivity : AppCompatActivity() {
         }
     }
 
+
+
     inner class TripAdapter(val items: ArrayList<Trip?>, val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
+
+        /**
+         * get the count from array
+         * @return the size
+         */
         override fun getItemCount(): Int {
             return items.size
         }
 
+        /**
+         * Creates the view which the user interacts
+         * @param parent top vie
+         * @param position position in the array
+         */
         override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
             var inflater = LayoutInflater.from(parent.getContext())
 
@@ -299,6 +327,11 @@ class BusDetailsActivity : AppCompatActivity() {
             return ViewHolder(result)
         }
 
+        /**
+         * Binds the view which the user interacts
+         * @param holder holds the view
+         * @param position position in the array
+         */
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val latitude =  items.get(position)?.latitude
             var longitude = items.get(position)?.longitude
@@ -324,7 +357,12 @@ class BusDetailsActivity : AppCompatActivity() {
     }
 
     inner class PagerAdapter(fm : FragmentManager) : FragmentPagerAdapter(fm) {
-
+        /**
+         * gets fragment and returns in
+         *
+         * @param position position in the array
+         * @return fragment
+         */
         override fun getItem(position: Int): Fragment {
             var oneArray : ArrayList<Trip?> = ArrayList<Trip?>()
             var twoArray : ArrayList<Trip?> = ArrayList<Trip?>()
@@ -365,11 +403,22 @@ class BusDetailsActivity : AppCompatActivity() {
             }
         }
 
+        /**
+         * gets the count of array
+         *
+         * @return count
+         */
+
         override fun getCount(): Int {
             return 2
         }
 
-
+        /**
+         * shows route titles
+         *
+         * @param position
+         * @return title for position
+         */
         override fun getPageTitle(position: Int): CharSequence? {
             var route1 = busRoute1?.routeName + " (" + busRoute1?.routeDirection + ")"
             var route2 = (busRoute2?.routeName  + " (" + busRoute2?.routeDirection + ")").takeIf { busRoute2 != null } ?: ""

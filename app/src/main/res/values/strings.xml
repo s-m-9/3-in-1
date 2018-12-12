@@ -46,6 +46,14 @@
     <string name="gettingResults">Getting Results</string>
     <string name="DeletedFromBusFavourites">Deleted From Favourites</string>
     <string name="DeleteAreYouSure">Are you sure you want to delete this from favorites?</string>
+    <string name="SearchHint">Search</string>
+    <string name="AdjTime">Adjusted Time</string>
+    <string name="GPSPos">GPS Position</string>
+    <string name="Speed">Speed</string>
+    <string name="StartTime">Start Time</string>
+    <string name="noBussesAvailable">No Busses Available</string>
+    <string name="adjSchedLabel">Average Adjusted Schedule Time</string>
+
 
 
     <string name="ok">OK</string>

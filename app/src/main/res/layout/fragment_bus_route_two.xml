@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/noBusses2"
-            android:text="No Busses Available"
+            android:text="@string/noBussesAvailable"
             android:textSize="30dp"
             android:visibility="invisible"/>
 
