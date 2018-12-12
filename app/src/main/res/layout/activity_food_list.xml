@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".FoodListActivity"
-android:id="@+id/foodListContainer">
+>
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/TheToolbar"
@@ -24,14 +24,21 @@ android:id="@+id/foodListContainer">
             android:layout_below="@id/TheToolbar"
             android:id="@+id/bus_drawer_layout">
 
-    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:id="@+id/container"
-                  android:layout_height="match_parent" android:layout_alignBottom="@+id/typeSearch"
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:id="@+id/container"
+                  android:layout_height="match_parent"
+                  android:layout_alignBottom="@+id/typeSearch"
                   android:layout_marginBottom="-459dp"></LinearLayout>
 
         <RelativeLayout android:layout_height="match_parent"
                         android:layout_width="wrap_content"
 
         >
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_below="@id/typeSearch"
+                         android:id="@+id/foodListContainer"></FrameLayout>
             <EditText android:layout_width="297dp"
                       android:layout_height="wrap_content"
                       android:id="@+id/typeSearch"

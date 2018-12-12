@@ -2,6 +2,7 @@ package bmm.com.threeinone
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -90,9 +92,11 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
         inputText = findViewById(R.id.typeSearch)
 
         pressSearch.setOnClickListener{
+
             if (inputText.text.isEmpty()){
                 Toast.makeText(this, "Search field must not be empty", Toast.LENGTH_LONG).show()
             }else{
+                hideKeyboard()
                 FoodQuery().execute(inputText.text.toString())
                 inputText.setText("")
 
@@ -314,6 +318,11 @@ class FoodListActivity() : AppCompatActivity(), SearchFragment.OnFragmentInterac
         var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
 }
