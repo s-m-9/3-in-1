@@ -281,6 +281,7 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             R.id.action_two -> {
                 var builder = AlertDialog.Builder(this);
+
                 builder.setTitle("1.Type in a bus stop in order to search for the schedule, Press search\n" +
                         "2. Choose a bus route that passes through the stop\n" +
                         "3. Look through the tabs to see the bus information")

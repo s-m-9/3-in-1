@@ -98,8 +98,8 @@ var avgSum = 0
         avgSum = avgSum.div(count)
         yearSum = yearSum.div(count)
 
-        avgRunTimeView.text = "Average Sum: " + avgSum.toString()
-        avgYearView.text = "Year Sum: " + yearSum.toString()
+        avgRunTimeView.text = "Average Run Time: " + avgSum.toString()
+        avgYearView.text = "Average Year: " + yearSum.toString()
         maxRunTimeView.text = "Max Runtime: " + maxRunTime.toString()
         minRunTimeView.text = "Min Runtime: " + minRunTime.toString()
 

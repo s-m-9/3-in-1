@@ -43,6 +43,12 @@
 
     <string name="toolbar_choose">Choose An Activity</string>
 
+    <string name="favourite_foods">Favourite Foods</string>
+    <string name="food_search">Search</string>
+    <string name="food_search_item">Search for any food item...</string>
+    <string name="add_to_fav_food">Add to Favourites</string>
+    <string name="go_to_favs_food">Go to Favourites</string>
+
 
 
     <string name="bus_destination">Bus Destination</string>
@@ -63,6 +69,9 @@
     <string name="StartTime">Start Time</string>
     <string name="noBussesAvailable">No Busses Available</string>
     <string name="adjSchedLabel">Average Adjusted Schedule Time</string>
+
+
+
 
 
 

@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Xml
@@ -186,15 +187,19 @@ error.visibility = View.INVISIBLE
      * @return in the onCreateOptionsMenu function, we are
      * going to return true
      */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//
+//        return true
+//    }
 
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
-
-
-
-
-
 
 
     /**
@@ -210,7 +215,7 @@ error.visibility = View.INVISIBLE
                 startActivity(navIntent)
             }
             R.id.food_item -> {
-                val navIntent = Intent(this, BusListActivity::class.java)
+                val navIntent = Intent(this, FoodListActivity::class.java)
                 startActivity(navIntent)
             }
             R.id.news_item -> {
@@ -231,6 +236,36 @@ error.visibility = View.INVISIBLE
 
 
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_one -> {
+//                Snackbar.make( snackbarButton, currentMessage, Snackbar.LENGTH_LONG).show()
+            }
+            R.id.action_two -> {
+                var builder = AlertDialog.Builder(this);
+                builder.setTitle("m")
+
+                builder.setPositiveButton("OK", {dialog, id ->
+                    // User clicked OK button
+
+                })
+
+
+                var dialog = builder.create()
+                dialog.show();
+
+
+            }
+            R.id.action_three -> {
+
+            }
+            R.id.action_four -> {
+                Toast.makeText(this, "Version 1.0 by Josh", Toast.LENGTH_LONG).show()
+            }
+        }
+        return true
     }
 
 

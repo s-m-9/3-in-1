@@ -43,6 +43,12 @@
 
     <string name="toolbar_choose">Choisir une activite</string>
 
+    <string name="favourite_foods">Favourite Foods(fr)</string>
+    <string name="food_search">Search(fr)</string>
+    <string name="food_search_item">Search for any food item(fr)...</string>
+    <string name="add_to_fav_food">Add to Favourites(fr)</string>
+    <string name="go_to_favs_food">Go to Favourites(fr)</string>
+
 
 
     <string name="bus_destination">Destination de Bus</string>
