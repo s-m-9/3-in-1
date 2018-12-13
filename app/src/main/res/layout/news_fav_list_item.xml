@@ -21,14 +21,14 @@
                       android:layout_height="wrap_content"
                       android:id="@+id/newsFavTitle"
                       android:text="title"
-                      android:textSize="35dp"/>
+                      android:textSize="16dp"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/NewsFavDelete"
                     android:text="Delete"
-                    android:layout_gravity="center"
+                    android:layout_gravity="right"
                     android:background="#b00"
                     android:textColor="#fff"
                     android:padding="5dp"

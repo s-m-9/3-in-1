@@ -13,6 +13,8 @@
     <string name="news_txt6">News Details 6</string>
     <string name="news_txt7">News Details 7</string>
     <string name="news_btn_save">Save</string>
+    <string name="news_about_txt">Author: Danilo Tiburcio Murta</string>
+    <string name="news_version_txt">Version: 1.0</string>
 
     <string name="news_txt_list">News</string>
 
@@ -21,6 +23,8 @@
     <string name="news_btn_bookmark">Add to Favourites</string>
     <string name="news_hint_search">search</string>
     <string name="news_title">News</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 
     <string name="movie_title">Title</string>
     <string name="movie_rating">Rating</string>
