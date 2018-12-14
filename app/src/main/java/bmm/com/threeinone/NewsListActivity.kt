@@ -6,9 +6,6 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Xml
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
@@ -16,6 +13,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.text.FieldPosition
 import android.Manifest.permission.INTERNET
+import android.app.AlertDialog
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -23,6 +23,15 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.view.*
+import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
+import android.support.v4.app.NotificationCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 
 data class NewsArticle (
@@ -34,6 +43,9 @@ data class NewsArticle (
 )
 
 class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     var listArray : ArrayList<NewsArticle> = ArrayList<NewsArticle>()
     lateinit var newsListAdapter : NewsListAdapter
@@ -84,15 +96,32 @@ inner class NewsListQuery : AsyncTask<String, Integer, String>(){
                     if(tagName.equals("description")) {
                      //going to set the obj to whats inside the tag using nextText()
                      description = xpp.nextText()
+                    var imgData:String? = Regex("<[^>]*>").find(description.toString())?.value
+
+                        var imgData2 = Regex("<[^>]*>").find(description.toString())
+                        var src:String? = ""
+                        var articleData:String? = ""
+      if(imgData != null) {
+          try {
+              Log.i("tag", Regex("\\<img.+src\\=(?:\\\"|\\')(.+?)(?:\\\"|\\')(?:.+?)\\>").find(imgData.toString())!!.groups[1]?.value)
+              src = Regex("\\<img.+src\\=(?:\\\"|\\')(.+?)(?:\\\"|\\')(?:.+?)\\>").find(imgData.toString())!!.groups[1]?.value
+              articleData =  description.toString().replace(imgData!!.toString(),"").replace("<p>","").replace("</p>","")
+          } catch (err : KotlinNullPointerException) {
+              Log.e("Error", "Null pointer exception stuff $err")
+              src = "https://i.cbc.ca/1.4945072.1544732191!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_460/afp-z4294.jpg"
+              articleData = "[Error getting article]"
+          }
+
+      }
                         val re = Regex("\\(?\\b(https://|www[.])[-A-Za-z0-9+&amp;@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&amp;@#/%=~_()|]")
                         val matchResult = re.find(description)
 
                        if (matchResult != null) {
-                           article?.newsImage = matchResult.value
+                           article?.newsImage = src
 //                           Log.i("Somethign", matchResult.value)
                        }
 
-                     article?.newsDescription = description
+                     article?.newsDescription =  articleData
 
                     }
 
@@ -155,6 +184,21 @@ inner class NewsListQuery : AsyncTask<String, Integer, String>(){
         navView.setNavigationItemSelectedListener(this)
 
 
+        var newsToolbar = findViewById<Toolbar>(R.id.news_toolbar)
+        newsToolbar.setTitle("News Reader")
+        setSupportActionBar(newsToolbar);
+
+        //add navigation to toolbar
+        var drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        var toggle = ActionBarDrawerToggle(this, drawer, newsToolbar, R.string.open, R.string.close)
+
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
+
+        var navView = findViewById<NavigationView>(R.id.navigation_view)
+        navView.setNavigationItemSelectedListener(this)
+
+
         var myQuery = NewsListQuery()
         myQuery.execute()
 
@@ -180,6 +224,90 @@ inner class NewsListQuery : AsyncTask<String, Integer, String>(){
 
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.news_menu_toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.news_toolbar_bookmark -> {
+
+                var intent = Intent(this, NewsFavouritesActivity::class.java)
+                startActivity(intent)
+
+            }
+            R.id.news_toolbar_statistics -> {
+                var builder = AlertDialog.Builder(this);
+                builder.setTitle("Statistics")
+//                builder.setMessage()
+                //    stats()
+// Add the buttons
+                builder.setPositiveButton("Ok", { dialog, id ->
+                    //user clicked OK button
+
+                    //finish()
+                })
+
+                var dialog = builder.create()
+                dialog.show()
+            }
+
+            R.id.news_toolbar_about -> {
+
+                var newsAbout = layoutInflater.inflate(R.layout.news_about_dialog, null)
+                var builder = AlertDialog.Builder(this);
+                builder.setTitle("About")
+                builder.setView(newsAbout)
+                builder.setPositiveButton("Ok", { dialog, id -> })
+
+                var dialog = builder.create()
+                dialog.show()
+            }
+        }
+        return true
+    }
+
+    fun stats() {
+        lateinit var dbHelper : TheDatabaseHelper
+        lateinit var db : SQLiteDatabase
+        val NEWS_TABLE = "FavouriteNews"
+        val NEWS_IMAGE = "NewImage"
+        val NEWS_TITLE = "NewsTitle"
+        val NEWS_DESC = "NewDescription"
+        val NEWS_LINK = "NewsLink"
+        dbHelper = TheDatabaseHelper(this)
+        db = dbHelper.writableDatabase
+
+        lateinit var results  : Cursor
+
+        results = db.query(NEWS_TABLE, arrayOf("_id", NEWS_TITLE, NEWS_DESC, NEWS_LINK, NEWS_IMAGE), null, null, null, null, null)
+
+        results.moveToFirst()
+
+        var titleIndex = results.getColumnIndex(NEWS_TITLE)
+        var descIndex = results.getColumnIndex(NEWS_DESC)
+        var linkIndex = results.getColumnIndex(NEWS_LINK)
+        var imageIndex = results.getColumnIndex(NEWS_IMAGE)
+        var count = 0
+//            title.text =
+
+        while (!results.isAfterLast()) {
+            var thisTitle = results.getString(titleIndex)
+            var thisDesc = results.getString(descIndex)
+            var thisLink = results.getString(linkIndex)
+            var thisImage = results.getString(imageIndex)
+
+            //newsFavArray.add(NewsArticle(thisTitle, thisDesc, thisLink, thisImage))
+
+            results.moveToNext()
+        }
+    }
+
+
+
+
 
     inner class NewsListAdapter(ctx : Context) : ArrayAdapter<NewsArticle>(ctx, 0) {
         /**

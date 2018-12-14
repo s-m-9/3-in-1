@@ -6,10 +6,22 @@ import android.os.Bundle
 import android.widget.ImageButton
 import android.Manifest.permission.INTERNET
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.Image
+import android.net.Uri
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_choose.view.*
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
+import android.os.AsyncTask
+import android.util.Log
+
 
 class NewsDetailsActivity : Activity() {
 
@@ -26,6 +38,7 @@ class NewsDetailsActivity : Activity() {
     lateinit var imageView: ImageView
     lateinit var descriptionView : TextView
     lateinit var linkView : TextView
+    lateinit var bitmp: Bitmap
     var imageLink : String? = null
 
     val NEWS_TABLE = "FavouriteNews"
@@ -91,14 +104,34 @@ class NewsDetailsActivity : Activity() {
         titleView.text = title
 
         desc = data?.getStringExtra("description")
-        descriptionView.text = desc
+        descriptionView.text = desc?.trim()
 
 
         link = data?.getStringExtra("link")
         linkView.text = link
 
+        image = data?.getStringExtra("image")
 
-        image = " no image "
+linkView.setOnClickListener {
+    openWebPage(linkView.text.toString())
+}
+
+//        bitmp = getImage(image!!)!!
+//        val outputStream = openFileOutput("$iconName.png", Context.MODE_PRIVATE)
+//        bitmp.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+//        outputStream.flush()
+//        outputStream.close()
+
+
+     DownloadImageTask().execute(image)
+
+
+
+
+
+
+
+
 //        image = data?.getStringExtra("image")
 //
 //        if (image == null) {
@@ -114,5 +147,61 @@ class NewsDetailsActivity : Activity() {
 
 
 
+    }
+    fun openWebPage(url: String) {
+        val webpage: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
+
+    fun getImage(url: URL): Bitmap? {
+        var connection: HttpURLConnection? = null
+        try {
+            connection = url.openConnection() as HttpURLConnection
+            connection.connect()
+            val responseCode = connection.responseCode
+            return if (responseCode == 200) {
+                BitmapFactory.decodeStream(connection.inputStream)
+            } else
+                null
+        } catch (e: Exception) {
+            return null
+        } finally {
+            connection?.disconnect()
+        }
+    }
+
+    fun getImage(urlString: String): Bitmap? {
+        try {
+            val url = URL(urlString)
+            return getImage(url)
+        } catch (e: MalformedURLException) {
+            return null
+        }
+    }
+
+
+    private inner class DownloadImageTask() : AsyncTask<String, Void, Bitmap>() {
+
+        override fun doInBackground(vararg urls: String): Bitmap? {
+            val urldisplay = urls[0]
+            var mIcon11: Bitmap? = null
+            try {
+                val `in` = java.net.URL(urldisplay).openStream()
+                mIcon11 = BitmapFactory.decodeStream(`in`)
+            } catch (e: Exception) {
+                Log.e("Error", e.message)
+                e.printStackTrace()
+            }
+
+            return mIcon11
+        }
+
+        override fun onPostExecute(result: Bitmap) {
+            imageView = findViewById<ImageView>(R.id.news_image)
+            imageView.setImageBitmap(result)
+        }
     }
 }

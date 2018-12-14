@@ -6,23 +6,23 @@
 
 
 
-    <string name="news_txt1">News Details 1</string>
-    <string name="news_txt2">News Details 2</string>
-    <string name="news_txt3">News Details 3</string>
-    <string name="news_txt4">News Details 4</string>
-    <string name="news_txt5">News Details 5</string>
-    <string name="news_txt6">News Details 6</string>
-    <string name="news_txt7">News Details 7</string>
-    <string name="news_btn_save">Save</string>
+    <string name="news_txt1">Détails de nouvelles 1</string>
+    <string name="news_txt2">Détails de nouvelles 2</string>
+    <string name="news_txt3">Détails de nouvelles 3</string>
+    <string name="news_txt4">Détails de nouvelles 4</string>
+    <string name="news_txt5">Détails de nouvelles 5</string>
+    <string name="news_txt6">Détails de nouvelles 6</string>
+    <string name="news_txt7">Détails de nouvelles 7</string>
+    <string name="news_btn_save">Chercher</string>
 
-    <string name="news_txt_list">News</string>
+    <string name="news_txt_list">Nouvelles</string>
 
-    <string name="news_activity_name">News Reader</string>
-    <string name="news_search_bar">Search</string>
-    <string name="news_btn_search">Search</string>
-    <string name="news_btn_bookmark">Add to Favourites</string>
-    <string name="news_hint_search">search</string>
-    <string name="news_title">News</string>
+    <string name="news_activity_name">Lecteur de Nouvelles</string>
+    <string name="news_search_bar">Chercher</string>
+    <string name="news_btn_search">Chercher</string>
+    <string name="news_btn_bookmark">Ajouter aux Favoris</string>
+    <string name="news_hint_search">Chercher</string>
+    <string name="news_title">Nouvelles</string>
 
     <string name="movie_activity_name">Base de donnees de film</string>
     <string name="movie_title">Titre</string>

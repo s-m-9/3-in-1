@@ -2,6 +2,7 @@ package bmm.com.threeinone
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -58,6 +59,17 @@ class NewsFavouritesActivity : Activity() {
             newsFavArray.add(NewsArticle(thisTitle, thisDesc, thisLink, thisImage))
 
             results.moveToNext()
+        }
+
+        listView?.setOnItemClickListener {_, _, position, _->
+            val selected = newsFavArray[position]
+            val detailIntent = Intent(this, NewsDetailsActivity::class.java)
+            detailIntent.putExtra("title", newsFavArray.get(position).newsTitle)
+            detailIntent.putExtra("image", newsFavArray.get(position).newsImage)
+            detailIntent.putExtra("description", newsFavArray.get(position).newsDescription)
+            detailIntent.putExtra("link", newsFavArray.get(position).newsLink)
+
+            startActivity(detailIntent)
         }
 
     }

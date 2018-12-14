@@ -8,6 +8,7 @@
         tools:context=".NewsDetailsActivity">
 
 
+
     <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/news_card_view"
@@ -25,7 +26,7 @@
 
         <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:id="@+id/news_image"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/ic_launcher_background"/>
@@ -53,28 +54,20 @@
 
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="16sp"
+                android:layout_height="200dp"
                 android:id="@+id/news_description"
                 android:layout_below="@+id/news_title" />
 
+
         <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Link"
                 android:id="@+id/news_link"
                 android:layout_below="@+id/news_description" />
 
 
         </LinearLayout>
-    <!--<ImageButton-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/news_btn_bookmark"-->
-            <!--android:src="@drawable/news_btn_bookmark_on"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:background="@color/colorTransparent"-->
-            <!--android:id="@+id/news_btn_bookmark_on"/>-->
 
     </android.support.v7.widget.CardView>
 
