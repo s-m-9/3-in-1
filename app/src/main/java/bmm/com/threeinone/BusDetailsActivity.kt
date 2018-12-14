@@ -35,6 +35,7 @@ import java.net.URL
 
 
 /**
+ * The particular trip a bus is doing on a bus route
  *
  * @param destination where the bus is going
  * @param latitude latitude
@@ -51,6 +52,11 @@ data class Trip(var destination: String?,
                 var startTime: String?,
                 var adjTime: String?,
                 var routeID: Int?) : Parcelable {
+
+    /**
+     * bundles up the class in a parcel to use for sending
+     * @param parcel
+     */
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -80,6 +86,11 @@ data class Trip(var destination: String?,
     }
 }
 
+/**
+ * Contains the details of the the bus trips
+ * @author Suuba Magai
+ * @version 1.0
+ */
 class BusDetailsActivity : AppCompatActivity() {
     var tripArray : ArrayList<Trip?> = ArrayList<Trip?>()
     var routeDirection : Int = 0
@@ -117,8 +128,8 @@ class BusDetailsActivity : AppCompatActivity() {
 
     /**
      * It gets data from the previous activity
-     * @param requestCode
-     * @param resultCode
+     * @param requestCode unused
+     * @param resultCode unused
      * @param data data incoming
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -141,6 +152,12 @@ class BusDetailsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * AsyncTask that gets the information for the busStop trip
+     *
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class TripQuery : AsyncTask<String, Integer, String>() {
         var trip : Trip? = null
 
@@ -164,6 +181,7 @@ class BusDetailsActivity : AppCompatActivity() {
 
         /**
          * Updates the GUI
+         * @param values unused
          */
         override fun onProgressUpdate(vararg values: Integer?) { // update your GUI
 //            if (listArray.isEmpty()) {
@@ -175,6 +193,7 @@ class BusDetailsActivity : AppCompatActivity() {
 
         /**
          * run when thread is done and going away
+         * @param result unused
          */
         override fun onPostExecute(result: String?) { // run when thread is done and going away
             fragmentAdapter = PagerAdapter(supportFragmentManager)
@@ -302,7 +321,12 @@ class BusDetailsActivity : AppCompatActivity() {
     }
 
 
-
+    /**
+     * creates the list items of the trip and and creates the list
+     *
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class TripAdapter(val items: ArrayList<Trip?>, val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
 
         /**
@@ -315,8 +339,9 @@ class BusDetailsActivity : AppCompatActivity() {
 
         /**
          * Creates the view which the user interacts
-         * @param parent top vie
+         * @param parent top view
          * @param position position in the array
+         * @return ViewHolder
          */
         override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
             var inflater = LayoutInflater.from(parent.getContext())
@@ -346,8 +371,14 @@ class BusDetailsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Holds the Textview for the recyclerview list
+     *
+     * @param view the list view
+     *
+     */
     inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        // Holds the TextView that will add each animal to
+
 
         val destination = view.busDestinationText
         val location = view.position
@@ -356,12 +387,19 @@ class BusDetailsActivity : AppCompatActivity() {
         val scheduleText = view.scheduleText
     }
 
+    /**
+     * The adapter for the fragment pager for the Bus Details tabs
+     * @param fm the manager for the fragments
+     * @return fm returns a fragment to the screen
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class PagerAdapter(fm : FragmentManager) : FragmentPagerAdapter(fm) {
         /**
          * gets fragment and returns in
          *
          * @param position position in the array
-         * @return fragment
+         *
          */
         override fun getItem(position: Int): Fragment {
             var oneArray : ArrayList<Trip?> = ArrayList<Trip?>()
@@ -404,7 +442,7 @@ class BusDetailsActivity : AppCompatActivity() {
         }
 
         /**
-         * gets the count of array
+         * gets the count of pages
          *
          * @return count
          */

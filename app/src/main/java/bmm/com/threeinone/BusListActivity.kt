@@ -20,7 +20,11 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-
+/**
+ * Shows the list of busses that pass through the stop
+ * @author Suuba Magai
+ * @version 1.0
+ */
 class BusListActivity : Activity() {
 
     var listArray : ArrayList<BusStop?> = ArrayList<BusStop?>()
@@ -92,7 +96,11 @@ class BusListActivity : Activity() {
     }
 
 
-
+    /**
+     * Gets the list of busses for the stop through AsyncTask
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class BusListQuery : AsyncTask<String, Integer, String>() {
         /*
             Getting the route summary for stop #3017 would be:
@@ -107,7 +115,9 @@ class BusListActivity : Activity() {
         var busStop : BusStop? = null
 
         /**
-         * Do URL in the other thread
+         * Does the URL in the other thread
+         * @param params unused
+         * @returns Done
          */
 
         override fun doInBackground(vararg params: String?): String {
@@ -128,6 +138,7 @@ class BusListActivity : Activity() {
 
         /**
          * Updates the GUI
+         * @param values unused
          */
         override fun onProgressUpdate(vararg values: Integer?) { // update your GUI
             if (listArray.isEmpty()) {
@@ -138,9 +149,9 @@ class BusListActivity : Activity() {
 
         /**
          *
-         * run when thread is done and going away
+         * orders the list by bus Route number into the busRoute array
          *
-         * @param result
+         * @param result unused
          *
          */
         override fun onPostExecute(result: String?) { // run when thread is done and going away
@@ -171,9 +182,9 @@ class BusListActivity : Activity() {
                     }
                 }
 
-                for  (stop in busStopArray) {
-                    Log.i("One", "ok "  + stop);
-                }
+//                for  (stop in busStopArray) {
+//                    Log.i("One", "ok "  + stop);
+//                }
             }
         }
 
@@ -246,6 +257,11 @@ class BusListActivity : Activity() {
         }
     }
 
+    /**
+     *Returns the list of Bus Routes
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class BusListAdapter(ctx : Context): ArrayAdapter<BusRoute>(ctx, 0) {
         /**
          *

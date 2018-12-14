@@ -67,6 +67,13 @@ class BusRouteOneFragment : Fragment() {
         return screen
     }
 
+
+    /**
+     * creates the list items of the trip and and creates the list
+     *
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class TripAdapter(val items: ArrayList<Trip>, val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
         /**
          * gets the count of array
@@ -77,6 +84,12 @@ class BusRouteOneFragment : Fragment() {
             return items.size
         }
 
+        /**
+         * Creates the view which the user interacts
+         * @param parent top view
+         * @param position position in the array
+         * @return ViewHolder
+         */
         override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
             var inflater = LayoutInflater.from(parent.getContext())
 
@@ -86,6 +99,11 @@ class BusRouteOneFragment : Fragment() {
             return ViewHolder(result)
         }
 
+        /**
+         * Binds the view which the user interacts
+         * @param holder holds the view
+         * @param position position in the array
+         */
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val latitude =  items.get(position)?.latitude
             var longitude = items.get(position)?.longitude
@@ -100,6 +118,12 @@ class BusRouteOneFragment : Fragment() {
 
     }
 
+    /**
+     * Holds the Textview for the recyclerview list
+     *
+     * @param view the list view
+     *
+     */
     inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         // Holds the TextView that will add each animal to
 
@@ -109,8 +133,5 @@ class BusRouteOneFragment : Fragment() {
         val startTimeText = view.startTimeText
         val scheduleText = view.scheduleText
     }
-
-
-
 
 }

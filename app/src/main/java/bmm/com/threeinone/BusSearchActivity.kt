@@ -1,3 +1,13 @@
+/**
+ * This activity is The Bus Schedule. This app allows the user to search and save bus stops to their phone.
+ * Using those Bus stops,They can search for the routes that come through them. From there, they are able
+ * to view up to bus and there time that they are going through the stop. It also lists their location,
+ * adjusted schedule time and their speed as well.
+ * @author Suuba Magai
+ * @version 1.0
+ */
+
+
 package bmm.com.threeinone
 
 import android.app.Activity
@@ -35,10 +45,33 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.*
 
-
+/**
+ * This is the  object that contains information about a busStop
+ * @param routeNumber the bus stop number
+ * @param routeDirection the direction the busses at the stop are heading
+ * @param routeName the name of the route
+ * @param routeID the id of the route
+ * @author Suuba Magai
+ * @version 1.0
+ */
 data class BusStop(var routeNumber: String?, var routeDirection: String?, var routeName: String?, var routeID: Int?) : Serializable
+
+/**
+ * Contains both (if applicable) routes for the Bus Route
+ * @param busRoute1 the first bus route
+ * @param busRoute2 the second bus route
+ * @author Suuba Magai
+ * @version 1.0
+ */
 data class BusRoute(var busRoute1: BusStop?, var busRoute2: BusStop? = null) : Serializable
 
+
+/**
+ * This class searches for the bus route and adds it to the database
+ *
+ * @author Suuba Magai
+ * @version 1.0
+ */
 class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var listArray : ArrayList<BusStop?> = ArrayList<BusStop?>()
     var busStopArray : ArrayList<BusRoute> = ArrayList<BusRoute>()
@@ -160,6 +193,12 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    /**
+     * This class displays the list  of bus Stops in the database.
+     *
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class SavedRouteAdapter(ctx: Context) : ArrayAdapter<String>(ctx, 0) { // one i'm using
         override fun getCount() : Int {
             return savedArray.size
@@ -215,7 +254,12 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     val BUS_ROUTES = "Routes"
 
-
+    /**
+     * This is the database that contains the saved Bus Routes
+     *
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class BusDatabaseHelper : SQLiteOpenHelper(this@BusSearchActivity, DATABASE_NAME, null, VERSION_NUM) {
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL("CREATE TABLE $TABLE_NAME (_id INTEGER PRIMARY KEY AUTOINCREMENT, $BUS_ROUTES TEXT); ")
@@ -229,6 +273,13 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    /**
+     * deletes stop from the database and the bus arraylist for name and id
+     *
+     * @param id the id of the busStop in the database
+     * @param position the position of the busStop and its ID in the array.
+     * @return nothing
+     */
     fun deleteStop(id: Long, position: Int) {
         db.delete(TABLE_NAME, "_id=$id", null)
         results = db.query(TABLE_NAME, arrayOf("_id", BUS_ROUTES ),
@@ -239,12 +290,24 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     }
 
+    /**
+     * Shows the menu
+     *
+     * @param menu
+     * @return boolean true if menu is shown or false if it isn't
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        return super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
 
+    /**
+     * Shows items in the nav drawer and gives them functionalities
+     *
+     * @param item the item in the nav drawer
+     * @return boolean true if their is something being shown in the nav drawer or false if there isn't
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.movie_item -> {
@@ -274,15 +337,23 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         return true
     }
 
+    /**
+     * Shows items in the toolbar and gives them functionalities
+     *
+     * @param item the item in the toolbar
+     * @return boolean true if their is something being shown in the toolbar or false if there isn't
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_one -> {
-//                Snackbar.make( snackbarButton, currentMessage, Snackbar.LENGTH_LONG).show()
+                Toast.makeText(this, "Info Tab -->", Toast.LENGTH_LONG).show()
             }
             R.id.action_two -> {
                 var builder = AlertDialog.Builder(this);
 
-                builder.setTitle("1.Type in a bus stop in order to search for the schedule, Press search\n" +
+                builder.setTitle("Instructions")
+
+                builder.setMessage("1.Type in a bus stop in order to search for the schedule, Press search\n" +
                         "2. Choose a bus route that passes through the stop\n" +
                         "3. Look through the tabs to see the bus information")
 
@@ -298,7 +369,7 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             }
             R.id.action_three -> {
-
+                Toast.makeText(this, "<-- Info Tab", Toast.LENGTH_LONG).show()
             }
             R.id.action_four -> {
                 Toast.makeText(this, "Version 1.0 by Suuba", Toast.LENGTH_LONG).show()
@@ -307,6 +378,11 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         return true
     }
 
+    /**
+     * A function that hides the keyboard.
+     *
+     * @return nothing
+     */
     fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus.windowToken, InputMethodManager.SHOW_FORCED)

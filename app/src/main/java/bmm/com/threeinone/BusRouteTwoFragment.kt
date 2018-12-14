@@ -13,8 +13,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlinx.android.synthetic.main.busview_trip_item.view.*
 
-//There is no point to this fragment's existence
-
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -27,6 +25,14 @@ private const val ARG_PARAM2 = "param2"
 class BusRouteTwoFragment : Fragment() {
     lateinit var tripArray : ArrayList<Trip>
     lateinit var tripAdapter : TripAdapter
+
+    /**
+     * Creates the view which the user interacts with
+     * @param inflater inflates the view
+     * @param container the top view
+     * @param savedInstanceState
+     *
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,11 +62,28 @@ class BusRouteTwoFragment : Fragment() {
         return screen
     }
 
+    /**
+     * creates the list items of the trip and and creates the list
+     *
+     * @author Suuba Magai
+     * @version 1.0
+     */
     inner class TripAdapter(val items: ArrayList<Trip>, val ctx: Context) : RecyclerView.Adapter<ViewHolder>() {
+        /**
+         * gets the count of array
+         *
+         * @return count
+         */
         override fun getItemCount(): Int {
             return items.size
         }
 
+        /**
+         * Creates the view which the user interacts
+         * @param parent top view
+         * @param position position in the array
+         * @return ViewHolder
+         */
         override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
             var inflater = LayoutInflater.from(parent.getContext())
 
@@ -70,6 +93,11 @@ class BusRouteTwoFragment : Fragment() {
             return ViewHolder(result)
         }
 
+        /**
+         * Binds the view which the user interacts
+         * @param holder holds the view
+         * @param position position in the array
+         */
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val latitude =  items.get(position)?.latitude
             var longitude = items.get(position)?.longitude
@@ -84,6 +112,12 @@ class BusRouteTwoFragment : Fragment() {
 
     }
 
+    /**
+     * Holds the Textview for the recyclerview list
+     *
+     * @param view the list view
+     *
+     */
     inner class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         // Holds the TextView that will add each animal to
 
