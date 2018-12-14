@@ -23,15 +23,9 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+
 import android.view.*
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
-import android.support.v4.app.NotificationCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
+
 import android.view.MenuItem
 
 data class NewsArticle (
@@ -43,9 +37,7 @@ data class NewsArticle (
 )
 
 class NewsListActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 
     var listArray : ArrayList<NewsArticle> = ArrayList<NewsArticle>()
     lateinit var newsListAdapter : NewsListAdapter
@@ -171,17 +163,17 @@ inner class NewsListQuery : AsyncTask<String, Integer, String>(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_list)
 
-        var toolbar = findViewById<Toolbar>(R.id.TheToolbar) //import android.support.v7.widget.Toolbar
-        toolbar.setTitle(R.string.news_activity_name)
-        setSupportActionBar(toolbar) // show toolbar
+//        var toolbar = findViewById<Toolbar>(R.id.TheToolbar) //import android.support.v7.widget.Toolbar
+//        toolbar.setTitle(R.string.news_activity_name)
+//        setSupportActionBar(toolbar) // show toolbar
 
         //add navigation to toolbar
-        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
-        var toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close)
-        drawer.addDrawerListener(toggle)
-        toggle.syncState()
-        var navView = findViewById<NavigationView>(R.id.bus_navigation_view)
-        navView.setNavigationItemSelectedListener(this)
+//        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
+//        var toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close)
+//        drawer.addDrawerListener(toggle)
+//        toggle.syncState()
+//        var navView = findViewById<NavigationView>(R.id.bus_navigation_view)
+//        navView.setNavigationItemSelectedListener(this)
 
 
         var newsToolbar = findViewById<Toolbar>(R.id.news_toolbar)
@@ -370,29 +362,29 @@ inner class NewsListQuery : AsyncTask<String, Integer, String>(){
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.movie_item -> {
+            R.id.go_movies -> {
                 var resultIntent = Intent(this, MovieListActivity::class.java) // <-- change
                 startActivity(resultIntent)
                 finish()
             }
-            R.id.food_item -> {
+            R.id.go_food -> {
                 var resultIntent = Intent(this, FoodListActivity::class.java) // <-- change
                 startActivity(resultIntent)
                 finish()
             }
-            R.id.news_item -> {
+            R.id.go_news -> {
                 var resultIntent = Intent(this, NewsListActivity::class.java) // <-- change
                 startActivity(resultIntent)
                 finish()
             }
-            R.id.bus_item -> {
+            R.id.go_bus -> {
                 var resultIntent = Intent(this, BusSearchActivity::class.java) // <-- change
                 startActivity(resultIntent)
                 finish()
             }
         }
 
-        var drawer = findViewById<DrawerLayout>(R.id.bus_drawer_layout)
+        var drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
         return true
     }

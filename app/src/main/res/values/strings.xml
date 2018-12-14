@@ -25,8 +25,7 @@
     <string name="news_btn_bookmark">Add to Favourites</string>
     <string name="news_hint_search">search</string>
     <string name="news_title">News</string>
-    <string name="open">open</string>
-    <string name="close">close</string>
+
 
     <string name="movie_activity_name">Movie Database</string>
     <string name="movie_title">Title</string>
