@@ -145,37 +145,43 @@ class BusSearchActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show()
             searchResult = searchBar.text.toString()
 
-            hideKeyboard()
+            if (searchResult.equals("")) {
+                Log.i("no", "no")
+            } else {
 
-            if (listArray.isNotEmpty()) {
-                listArray.clear()
-                busStopArray.clear()
+                hideKeyboard()
 
+                if (listArray.isNotEmpty()) {
+                    listArray.clear()
+                    busStopArray.clear()
+
+                }
+
+                notFound.visibility = View.INVISIBLE
+
+                savedArray.add(searchResult)
+                savedListAdapter.notifyDataSetChanged()
+
+                // Have a thing that checks to see if its all good?
+
+
+                // write to database
+                val newRow = ContentValues() // import new row into table
+                newRow.put(BUS_ROUTES, searchResult);
+                db.insert(TABLE_NAME, "", newRow) // insert
+
+                val id = db.query(
+                    TABLE_NAME, arrayOf("_id"), "$BUS_ROUTES = ?", arrayOf(searchResult),
+                    null, null, null
+                )
+
+                id.moveToFirst()
+                var idIndex = id.getColumnIndex("_id")
+                var theId = id.getInt(idIndex)
+                Log.i("This is the id", id.getInt(idIndex).toString())
+                savedIDArray.add(theId)
+                searchBar.setText("")
             }
-
-            notFound.visibility = View.INVISIBLE
-
-            savedArray.add(searchResult)
-            savedListAdapter.notifyDataSetChanged()
-
-            // Have a thing that checks to see if its all good?
-
-
-
-            // write to database
-            val newRow = ContentValues() // import new row into table
-            newRow.put(BUS_ROUTES, searchResult);
-            db.insert(TABLE_NAME, "", newRow) // insert
-
-            val id = db.query(TABLE_NAME, arrayOf("_id"), "$BUS_ROUTES = ?", arrayOf(searchResult),
-                null, null, null)
-
-            id.moveToFirst()
-            var idIndex = id.getColumnIndex("_id")
-            var theId = id.getInt(idIndex)
-            Log.i("This is the id", id.getInt(idIndex).toString())
-            savedIDArray.add(theId)
-            searchBar.setText("")
         }
 
         progress_bar = findViewById<ProgressBar>(R.id.bus_progressBar)
